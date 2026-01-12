@@ -1,0 +1,359 @@
+vocab:
+  id: vvc
+  value: https://w3id.org/vvc
+ontology:
+  - property: dc:title
+    value: Vehicle Credentials Vocabulary
+  - property: dc:description
+    value: |-
+      <div>
+          <h2>Introduction to the Vehicle Credentials Vocabulary</h2>
+          <p>The Vehicle Credentials Vocabulary provides a clear way to describe important information about vehicles and their ownership. This vocabulary simplifies communication about vehicles by ensuring everyone uses the same terms and definitions. By having a common language, misunderstandings can be reduced when sharing information about vehicles.</p>
+          
+          <p>This vocabulary is beneficial for many reasons. It allows for consistent data sharing between different parties involved in the vehicle industry. Whether it's a car manufacturer, dealership, insurance company, or government agency, everyone can have a shared understanding. This improves efficiency and helps to streamline processes, making it easier to handle vehicle credentials quickly and accurately.</p>
+          
+          <p>Various market verticals can benefit from using the Vehicle Credentials Vocabulary. Automotive manufacturers can standardize their vehicle specifications, while dealerships can provide better information to potential buyers. Insurance companies can use the vocabulary to assess risk and evaluate policies based on clear vehicle data. Additionally, government agencies can improve their record-keeping and make vehicle information more accessible to the public.</p>
+          
+          <p>Use cases for the vocabulary include vehicle registration, tracking ownership changes, and sharing technical specifications between manufacturers and dealerships. It is also valuable in managing insurance claims and assessing vehicle values. The vocabulary meets the requirements of being comprehensive and adaptable, which means it can evolve along with changes in the vehicle industry.</p>
+          
+          <p>In summary, the Vehicle Credentials Vocabulary is a powerful tool that brings clarity and consistency to the vehicle industry. By facilitating better communication and data sharing, this vocabulary can help a wide range of businesses and organizations work more effectively together. It sets the stage for improved operations and better customer experiences throughout the vehicle lifecycle.</p>
+      </div>
+  - property: dc:abstract
+    value: >-
+      The Vehicle Credentials Vocabulary is designed to help organize and share
+      information about vehicles and their ownership. It includes
+      terms and definitions that describe different aspects of vehicles, such as
+      their specifications, registration details, insurance information, and ownership information.
+      This vocabulary is useful for anyone involved in vehicle management, whether
+      they are car owners, dealerships, or government agencies. By using this
+      vocabulary, all parties can communicate clearly and effectively about
+      vehicles, making it easier to track and manage important credentials.
+class:
+  - id: FirstSaleInformation
+    label: First Sale Information
+    comment: >-
+      First Sale Information refers to the details regarding the initial sale or
+      transfer of ownership of a vehicle. This class encompasses data such as
+      the sale date, selling party, and purchasing party, which are vital for
+      documenting the vehicle's ownership history.
+    context: https://w3id.org/vvc
+  - id: VehicleInsuranceCredential
+    label: Vehicle Insurance Credential
+    comment: >-
+      A document that provides evidence of insurance coverage for a vehicle.
+      This credential includes information such as the insurance policy number,
+      the name of the insurance provider, coverage details, and the effective
+      dates of the policy.
+    context: https://w3id.org/vvc
+  - id: VehicleInsuranceInformation
+    label: Vehicle Insurance Information
+    comment: >-
+      Vehicle Insurance Information refers to the details regarding the
+      insurance coverage for a vehicle, including policy numbers, insurance
+      provider, and validity periods. This class ensures that relevant insurance
+      data is linked with the vehicle for regulatory and risk management
+      purposes.
+    context: https://w3id.org/vvc
+  - id: VehicleRegistration
+    label: Vehicle Registration
+    comment: >-
+      A Vehicle Registration represents the official record of a vehicle's
+      registration with a government authority. This class includes details such
+      as the registration number, date of registration, and the name of the
+      registered owner, as well as any pertinent registration status or
+      expiration information.
+    context: https://w3id.org/vvc
+  - id: VehicleRegistrationCredential
+    label: Vehicle Registration Credential
+    comment: >-
+      A document that verifies a vehicle's registration with a governmental
+      authority. This credential includes details such as the vehicle
+      identification number (VIN), registration number, the owner's information,
+      and the registration's validity period. It serves as proof that the
+      vehicle has been registered and is allowed to operate on public roads.
+    context: https://w3id.org/vvc
+  - id: VehicleTitle
+    label: Vehicle Title
+    comment: >-
+      A Vehicle Title represents the legal document that establishes a person's
+      or entity's ownership of a vehicle. This class includes information such
+      as the title number, date of issue, and any relevant liens or encumbrances
+      associated with the vehicle.
+    context: https://w3id.org/vvc
+  - id: VehicleTitleCredential
+    label: Vehicle Title Credential
+    comment: >-
+      A document that establishes ownership of a vehicle. This credential is
+      issued by the appropriate authority and contains important information
+      including the vehicle identification number (VIN), the owner's name, and
+      any liens against the vehicle. It is used in various legal and financial
+      transactions involving the vehicle.
+    context: https://w3id.org/vvc
+property:
+  - id: bodyType
+    label: Body Type
+    range: xsd:string
+    comment: >-
+      The Body Type property specifies the classification of a vehicle based on
+      its physical design characteristics, such as sedan, coupe, SUV, or truck.
+      This property is useful for vehicle identification, regulatory purposes,
+      and consumer preferences.
+    context: https://w3id.org/vvc
+  - id: brand
+    label: Brand
+    range: schema:Organization
+    comment: >-
+      The Brand property identifies the name of the brand associated with the
+      vehicle, typically linked to the manufacturer. This property is vital for
+      branding, marketing, and consumer identification purposes, helping
+      customers recognize and select vehicles based on brand reputation.
+    context: https://w3id.org/vvc
+  - id: controlNumber
+    label: Control Number
+    range: xsd:string
+    comment: >-
+      The Control Number is a unique identifier assigned to a vehicle or related
+      documentation for tracking and management purposes. This property helps in
+      organizing records, facilitating audits, and ensuring that all vehicle
+      credentials can be accurately referenced.
+    context: https://w3id.org/vvc
+  - id: coverageAmount
+    label: Coverage Amount
+    range: schema:MonetaryAmount
+    comment: >-
+      The Coverage Amount property specifies the maximum sum that an insurance
+      policy will pay in the event of a claim. This information is crucial for
+      understanding the financial protection offered by the policy.
+    context: https://w3id.org/vvc
+  - id: designations
+    label: Designations
+    range: xsd:string
+    comment: >-
+      A collection of official titles or designations related to the vehicle's
+      title status. This property may encompass various identifiers that
+      indicate the vehicle's legal status, such as 'clear', 'salvage', or other
+      relevant classifications that impact ownership, insurance, or
+      transferability.
+    context: https://w3id.org/vvc
+  - id: equipmentTrustNumber
+    label: Equipment Trust Number
+    range: xsd:string
+    comment: >-
+      The Equipment Trust Number is a unique identifier associated with the
+      financing or leasing trust of a piece of equipment. This property is used
+      to track and manage ownership and financial agreements related to the
+      equipment, ensuring clarity in financial transactions and
+      responsibilities.
+    context: https://w3id.org/vvc
+  - id: fuelType
+    label: Fuel Type
+    range: xsd:string
+    comment: >-
+      The Fuel Type property indicates the kind of fuel that a vehicle utilizes
+      for operation, such as gasoline, diesel, electric, or hybrid. This
+      information is crucial for consumers' energy choices, regulatory
+      adherence, and environmental considerations.
+    context: https://w3id.org/vvc
+  - id: insuranceProvider
+    label: Insurance Provider
+    range: schema:Organization
+    comment: >-
+      The Insurance Provider property identifies the company or organization
+      that issues the insurance policy for the vehicle. This property is
+      essential for managing policy details, facilitating claims processing, and
+      ensuring compliance with insurance requirements.
+    context: https://w3id.org/vvc
+  - id: licensePlateIdentifier
+    label: License Plate Identifier
+    range: xsd:string
+    comment: >-
+      The License Plate Identifier is a unique alphanumeric code assigned to a
+      vehicle's license plate. This property is used to identify the vehicle on
+      public roads and in legal documentation, aiding in tracking ownership,
+      registration, and compliance with local regulations.
+    context: https://w3id.org/vvc
+  - id: lienholder
+    label: Lienholder
+    range:
+      - schema:Person
+      - schema:Organization
+    comment: >-
+      The Lienholder property identifies the individual or organization that has
+      a legal claim or interest in a vehicle due to a loan or other financial
+      obligation. This property is crucial for understanding any existing liens
+      on the vehicle, which may affect ownership rights and transferability.
+    context: https://w3id.org/vvc
+  - id: lienholderReleaseDate
+    label: Lienholder Release Date
+    range: xsd:dateTime
+    comment: >-
+      The Lienholder Release Date indicates the date on which a lienholder
+      formally relinquishes their claim on a vehicle. This property is important
+      for documenting the resolution of a lien and allowing for the clear
+      transfer of ownership without encumbrances.
+    context: https://w3id.org/vvc
+  - id: manufacturer
+    label: Manufacturer
+    range: schema:Organization
+    comment: >-
+      The Manufacturer property identifies the organization responsible for
+      producing the vehicle. This property is important for tracking the source
+      of the vehicle, compliance with regulatory standards, and addressing any
+      manufacturer recalls or warranties.
+    context: https://w3id.org/vvc
+  - id: motorcycleEngineNumber
+    label: Motorcycle Engine Number
+    range: xsd:string
+    comment: >-
+      The Motorcycle Engine Number is a unique identifier assigned to the engine
+      of a motorcycle. This property is essential for tracking engine
+      specifications, verifying identity, and facilitating compliance with
+      regulatory requirements regarding vehicle identification.
+    context: https://w3id.org/vvc
+  - id: numberOfAxles
+    label: Number of Axles
+    range: xsd:unsignedInt
+    comment: >-
+      The Number of Axles property specifies the total count of axles on a
+      vehicle. This information is important for regulatory compliance, vehicle
+      classification, and determining weight restrictions for transportation
+      purposes.
+    context: https://w3id.org/vvc
+  - id: odometerReading
+    label: Odometer Reading
+    range: schema:Observation
+    comment: >-
+      The Odometer Reading represents the total distance traveled by a vehicle
+      as recorded by the vehicle's odometer. This property is useful for
+      assessing the vehicle's usage, maintenance needs, and overall value in
+      relation to age and condition.
+    context: https://w3id.org/vvc
+  - id: owner
+    label: Owner
+    range:
+      - schema:Person
+      - schema:Organization
+    comment: >-
+      The Owner property identifies the individual or organization that
+      possesses legal rights to a vehicle. This property can be used to
+      associate a vehicle with a person's name or an organization's entity,
+      providing clear ownership information for registration and legal purposes.
+    context: https://w3id.org/vvc
+  - id: ownerSaleRequirements
+    label: Owner Sale Requirements
+    range: xsd:string
+    comment: >-
+      A detailed description of the conditions and requirements that a vehicle
+      owner must fulfill to sell their vehicle. This may include documentation
+      needed, compliance with legal regulations, and any restrictions or
+      obligations associated with the sale, ensuring a lawful and smooth
+      transfer of ownership.
+    context: https://w3id.org/vvc
+  - id: policyEndDate
+    label: Policy End Date
+    range: xsd:dateTime
+    comment: >-
+      The Policy End Date specifies the date on which the insurance coverage
+      expires. This property is important for tracking the need for policy
+      renewal and ensuring continuous insurance coverage for the vehicle.
+    context: https://w3id.org/vvc
+  - id: policyNumber
+    label: Policy Number
+    range: xsd:string
+    comment: >-
+      The Policy Number property refers to the unique identifier assigned to an
+      insurance policy covering a vehicle. This property is essential for
+      managing insurance details, facilitating claims processing, and ensuring
+      compliance with mandatory insurance requirements.
+    context: https://w3id.org/vvc
+  - id: policyStartDate
+    label: Policy Start Date
+    range: xsd:dateTime
+    comment: >-
+      The Policy Start Date indicates the date when the insurance coverage
+      begins. This property is crucial for understanding the validity period of
+      the policy and ensuring the vehicle is insured continuously.
+    context: https://w3id.org/vvc
+  - id: provenanceResource
+    label: Provenance Resource
+    range: xsd:string
+    comment: >-
+      A reference to the source or origin of information regarding a vehicle's
+      history, ownership, and other relevant details. This property may contain
+      links to documents, records, or databases that provide verification of the
+      vehicle's lineage and legal standing, ensuring transparency and trust in
+      vehicle-related transactions.
+    context: https://w3id.org/vvc
+  - id: purchaseDate
+    label: Purchase Date
+    range: xsd:dateTime
+    comment: >-
+      The Purchase Date specifies the date on which a vehicle was acquired by
+      the owner. This property is important for tracking ownership history,
+      determining warranty eligibility, and assessing vehicle depreciation over
+      time.
+    context: https://w3id.org/vvc
+  - id: registeringOrganization
+    label: Registering Organization
+    range: schema:Organization
+    comment: >-
+      The Registering Organization property identifies the company or
+      governmental entity responsible for the registration of the vehicle. This
+      property is essential for verifying the legitimacy of the registration and
+      for facilitating communication regarding registration matters.
+    context: https://w3id.org/vvc
+  - id: registrationExpirationDate
+    label: Registration Expiration Date
+    range: xsd:dateTime
+    comment: >-
+      The Registration Expiration Date indicates the date on which the vehicle
+      registration will become invalid unless renewed. This property is critical
+      for ensuring compliance with registration requirements and avoiding
+      penalties for operating an unregistered vehicle.
+    context: https://w3id.org/vvc
+  - id: registrationStartDate
+    label: Registration Start Date
+    range: xsd:dateTime
+    comment: >-
+      The Registration Start Date indicates when the vehicle's registration
+      became effective. This property is important for tracking the registration
+      timeline and ensuring compliance with regulatory requirements.
+    context: https://w3id.org/vvc
+  - id: titleIssueDate
+    label: Title Issue Date
+    range: xsd:dateTime
+    comment: >-
+      The date and time when the vehicle title was officially issued by the
+      governing authority. This property records the moment the ownership of the
+      vehicle was formally recognized and documented, serving as an important
+      reference for ownership history and transactions.
+    context: https://w3id.org/vvc
+  - id: vehicleIdentificationNumber
+    label: Vehicle Identification Number
+    range: schema:vehicleIdentificationNumber
+    comment: >-
+      A unique identifier assigned to a vehicle, commonly known as the Vehicle
+      Identification Number (VIN). This number is used to track the vehicle's
+      history, including ownership, registration, and insurance details. It is
+      essential for verifying the vehicle's identity and is included in various
+      official documents.
+    context: https://w3id.org/vvc
+  - id: vehicleModelDate
+    label: Vehicle Model Date
+    range: xsd:dateTime
+    comment: >-
+      The Vehicle Model Date specifies the date associated with the specific
+      model of a vehicle, indicating when the model was introduced or last
+      updated. This property is important for understanding the model's
+      manufacturing history, compliance with safety recalls, and assessing
+      vehicle value.
+    context: https://w3id.org/vvc
+  - id: weight
+    label: Weight
+    range: schema:QuantitativeValue
+    comment: >-
+      The Weight property indicates the mass of a vehicle, typically measured in
+      kilograms or pounds. This information is crucial for compliance with
+      transportation regulations, assessing performance metrics, and determining
+      towing capacities.
+    context: https://w3id.org/vvc
