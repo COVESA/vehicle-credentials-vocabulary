@@ -74,18 +74,31 @@ export async function writeContext({baseDir, yamlObj}) {
     console.log('Generated JSON-LD Context:', jsonldContextPath);
 }
 
-const yamlObj = await loadModel({yamlFilePath});
-const vocab = new yml2vocab.VocabGeneration(yaml.dump(yamlObj));
+function sortDefinitions({yamlObj}) {
+  for(const definitions of [yamlObj.property, yamlObj.class]) {
+    definitions.sort((a, b) => a.id.split(':').pop().localeCompare(b.id.split(':').pop()));
+  }
+}
 
-const baseDir = '.';
-const pkg = createRequire(import.meta.url)('./package.json');
-const slug = pkg.name;
+async function main() {
+  const yamlObj = await loadModel({yamlFilePath});
+  sortDefinitions({yamlObj});
+  const vocab = new yml2vocab.VocabGeneration(yaml.dump(yamlObj));
 
-const html = vocab.getHTML(await populateHtmlTemplate({slug, yamlObj}));
-writeHtml({baseDir, html});
-writeContext({baseDir, yamlObj});
+  const baseDir = '.';
+  const pkg = createRequire(import.meta.url)('./package.json');
+  const slug = pkg.name;
 
-// `vocabulary.jsonld` is the default filename used by yml2vocab
-fs.writeFileSync(path.join(baseDir, 'vocabulary.jsonld'), vocab.getJSONLD());
-// `vocabulary.ttl` is the default filename used by yml2vocab
-fs.writeFileSync(path.join(baseDir, 'vocabulary.ttl'), vocab.getTurtle());
+  const html = vocab.getHTML(await populateHtmlTemplate({slug, yamlObj}));
+  writeHtml({baseDir, html});
+  writeContext({baseDir, yamlObj});
+
+  // `vocabulary.jsonld` is the default filename used by yml2vocab
+  fs.writeFileSync(path.join(baseDir, 'vocabulary.jsonld'), vocab.getJSONLD());
+  // `vocabulary.ttl` is the default filename used by yml2vocab
+  fs.writeFileSync(path.join(baseDir, 'vocabulary.ttl'), vocab.getTurtle());
+}
+
+if(import.meta.main) {
+  await main();
+}
