@@ -1,0 +1,27 @@
+{
+  "name": "vehicle-credentials-vocabulary",
+  "version": "0.0.0",
+  "description": "A vocabulary for vehicle credentials",
+  "type": "module",
+  "scripts": {
+    "clean": "rm dist/*",
+    "build": "node build.js && npm run move",
+    "move": "mv vocabulary.html dist/index.html && mv vocabulary.context.jsonld vocabulary.jsonld vocabulary.ttl dist/",
+    "release": "bash -c 'VERSION=$0; npm run build && cp dist/vocabulary.context.jsonld \"dist/contexts/$VERSION.jsonld\" && git add -f dist/contexts/$VERSION.jsonld'",
+    "serve": "http-server dist/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/COVESA/vehicle-credentials-vocabulary.git"
+  },
+  "keywords": [
+    "vehicle credentials",
+    "vocabulary"
+  ],
+  "license": "MPL-2.0",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "js-yaml": "^4.1.0",
+    "yml2vocab": "^1.6.2"
+  }
+}
