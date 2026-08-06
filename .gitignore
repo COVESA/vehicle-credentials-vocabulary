@@ -6,3 +6,5 @@
 .settings
 .vscode
 TAGS
+dist/
+node_modules/
