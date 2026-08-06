@@ -3,6 +3,7 @@
     <meta charset='utf-8'/>
     <title></title>
     <script class="remove" src="https://www.w3.org/Tools/respec/respec-w3c"></script>
+    <script class="remove" src="https://w3c.github.io/vc-data-model/common.js"></script>
     <script class="remove"
       src="https://cdn.jsdelivr.net/gh/digitalbazaar/respec-vc@3.4.0/dist/main.js"></script>
 
@@ -15,20 +16,75 @@
     </script>
     <script class="remove">
       var respecConfig = {
+        subtitle: "Representing vehicles and vehicle ownership with Verifiable Credentials",
+        group: "credentials",
+        specStatus: "CG-DRAFT",
+        shortName: "verifiable-vehicle-credentials",
+        edDraftURI: "",
+        editors: [{
+          name: "Wesley Smith", url: "",
+          company: "Digital Bazaar", companyURL: "https://digitalbazaar.com/"
+        }],
+        authors: [{
+          name: "Wesley Smith", url: "",
+          company: "Digital Bazaar", companyURL: "https://digitalbazaar.com/"
+        }, {
+          name: "Dave Longley", url: "https://github.com/dlongley",
+          company: "Digital Bazaar", companyURL: "https://digitalbazaar.com/",
+          w3cid: 48025
+        }, {
+          name: "Manu Sporny", url: "https://www.linkedin.com/in/manusporny/",
+          company: "Digital Bazaar", companyURL: "https://digitalbazaar.com/",
+          w3cid: 41758
+        }],
+        github: "https://github.com/stateofca/vehicle-credentials-vocabulary/",
+        maxTocLevel: 3,
         localBiblio: {
+          "CBOR-LD": {
+            title: "Compact Binary Object Representation for Linked Data v0.7",
+            href: "https://json-ld.github.io/cbor-ld-spec/"
+          },
+          "ICAO9303-3": {
+            title: "Machine Readable Travel Documents Part 3: Specifications Common to all MRTDs, Eighth Edition, 2021",
+            date: "2021",
+            href: "https://www.icao.int/publications/Documents/9303_p3_cons_en.pdf",
+            authors: [
+              "ICAO"
+            ],
+            publisher: "International Civil Aviation Organization"
+          },
+          "ISO15438-2015": {
+            title: "ISO/IEC 15438:2015: PDF417 Bar Code Symbology Specification",
+            date: "2015",
+            href: "https://www.iso.org/standard/65502.html",
+            authors: [
+              "ISO/IEC JTC 1/SC 31"
+            ],
+            publisher: "International Standards Organization"
+          }
         },
-        specStatus:  "base",
-        shortName:   "{{SHORTNAME}}",
-        thisVersion: "https://w3id.org/{{SHORTNAME}}",
+        lint: { "no-unused-dfns": false },
+        xref: ["INFRA"],
+        otherLinks: [{
+          key: "Related Specifications",
+          data: [{
+            value: "The Verifiable Credentials Data Model v2.0",
+            href: "https://www.w3.org/TR/vc-data-model-2.0/"
+          }, {
+            value: "Verifiable Credential Data Integrity v1.0",
+            href: "https://www.w3.org/TR/vc-data-integrity/"
+          }, {
+            value: "The Elliptic Curve Digital Signature Algorithm Cryptosuites v1.0",
+            href: "https://www.w3.org/TR/vc-di-ecdsa/"
+          }, {
+            value: "Compact Binary Object Representation for Linked Data v0.7",
+            href: "https://json-ld.github.io/cbor-ld-spec/"
+          }]
+        }],
         doJsonLd:    true,
         noRecTrack: true,
-        editors: [{
-          name: "Manu Sporny",
-          url: "https://www.linkedin.com/in/manusporny/",
-          company: "Digital Bazaar, Inc.",
-          companyUrl: "https://digitalbazaar.com/"
-        }],
         postProcess : [
+          restrictRefs,
           remove_status_remark,
           window.respecVc.createVcExamples
         ],
@@ -40,6 +96,46 @@
     </script>
     <script type="text/javascript" src="https://livejs.com/live.js"></script>
     <style type="text/css">
+      code {
+        color: rgb(199, 73, 0);
+        font-weight: bold;
+      }
+
+      pre.nohighlight {
+        overflow-x: auto;
+        white-space: pre-wrap;
+      }
+
+      pre .highlight {
+        font-weight: bold;
+        color: green;
+      }
+
+      pre .comment {
+        font-weight: bold;
+        color: Gray;
+      }
+
+      .color-text {
+        font-weight: bold;
+        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+      }
+
+      ol.algorithm {
+        counter-reset: numsection;
+        list-style-type: none;
+      }
+
+      ol.algorithm li {
+        margin: 0.5em 0;
+      }
+
+      ol.algorithm li:before {
+        font-weight: bold;
+        counter-increment: numsection;
+        content: counters(numsection, ".") ") ";
+      }
+
       dl.terms dt {
         float: left;
         clear: left;
@@ -89,7 +185,8 @@
 
     </style>
   </head>
-  <body  typeof="owl:Ontology">
+  <body typeof="owl:Ontology" resource="https://w3id.org/vvc"
+    prefix="vvc: https://w3id.org/vvc dc: http://purl.org/dc/terms/ owl: http://www.w3.org/2002/07/owl# rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns# rdfs: http://www.w3.org/2000/01/rdf-schema# xsd: http://www.w3.org/2001/XMLSchema# vs: http://www.w3.org/2003/06/sw-vocab-status/ns# schema: http://schema.org/ jsonld: http://www.w3.org/ns/json-ld#">
     <section id="abstract">
       <p>
 {{ABSTRACT}}
@@ -101,7 +198,7 @@
     </section>
     <section id="sotd">
       <p>
-This is an experimental vocabulary and is not fit for production usage.
+This is an experimental vocabulary. Its contents and associated files such as contexts are subject to change.
       </p>
     </section>
 
@@ -111,8 +208,6 @@ This is an experimental vocabulary and is not fit for production usage.
 {{INTRODUCTION}}
 
     <section>
-      <h2>Ecosystem Examples</h2>
-
 {{EXAMPLES}}
 
     </section>
@@ -129,6 +224,101 @@ This is an experimental vocabulary and is not fit for production usage.
         <h2><code>@context</code> files</h2>
         <p>The following <code>@context</code> files make use of the terms defined in this specification:</p>
         <ul id="contexts">
+          <li><a href="https://w3id.org/vvc/v1rc2" typeof="jsonld:Context"><code>https://w3id.org/vvc/v1rc2</code></a>
+            <details>
+              <summary>term list</summary>
+              <ul>
+                <li><a href="#bodyType"><code>bodyType<code></code></code></a></li>
+                <li><a href="#brand"><code>brand<code></code></code></a></li>
+                <li><a href="#controlNumber"><code>controlNumber<code></code></code></a></li>
+                <li><a href="#coverageAmount"><code>coverageAmount<code></code></code></a></li>
+                <li><a href="#designations"><code>designations<code></code></code></a></li>
+                <li><a href="#equipmentTrustNumber"><code>equipmentTrustNumber<code></code></code></a></li>
+                <li><a href="#fuelType"><code>fuelType<code></code></code></a></li>
+                <li><a href="#insuranceProvider"><code>insuranceProvider<code></code></code></a></li>
+                <li><a href="#licensePlateIdentifier"><code>licensePlateIdentifier<code></code></code></a></li>
+                <li><a href="#lienholder"><code>lienholder<code></code></code></a></li>
+                <li><a href="#lienholderReleaseDate"><code>lienholderReleaseDate<code></code></code></a></li>
+                <li><a href="#manufacturer"><code>manufacturer<code></code></code></a></li>
+                <li><a href="#motorcycleEngineNumber"><code>motorcycleEngineNumber<code></code></code></a></li>
+                <li><a href="#numberOfAxles"><code>numberOfAxles<code></code></code></a></li>
+                <li><a href="#odometerReading"><code>odometerReading<code></code></code></a></li>
+                <li><a href="#owner"><code>owner<code></code></code></a></li>
+                <li><a href="#ownerSaleRequirements"><code>ownerSaleRequirements<code></code></code></a></li>
+                <li><a href="#policyEndDate"><code>policyEndDate<code></code></code></a></li>
+                <li><a href="#policyNumber"><code>policyNumber<code></code></code></a></li>
+                <li><a href="#policyStartDate"><code>policyStartDate<code></code></code></a></li>
+                <li><a href="#provenanceResource"><code>provenanceResource<code></code></code></a></li>
+                <li><a href="#purchaseDate"><code>purchaseDate<code></code></code></a></li>
+                <li><a href="#registeringOrganization"><code>registeringOrganization<code></code></code></a></li>
+                <li><a href="#registrationExpirationDate"><code>registrationExpirationDate<code></code></code></a></li>
+                <li><a href="#registrationStartDate"><code>registrationStartDate<code></code></code></a></li>
+                <li><a href="#titleIssueDate"><code>titleIssueDate<code></code></code></a></li>
+                <li><a href="#vehicleIdentificationNumber"><code>vehicleIdentificationNumber<code></code></code></a></li>
+                <li><a href="#vehicleModelDate"><code>vehicleModelDate<code></code></code></a></li>
+                <li><a href="#weight"><code>weight<code></code></code></a></li>
+                <li><a href="#FirstSaleInformation"><code>FirstSaleInformation<code></code></code></a></li>
+                <li><a href="#VehicleInsuranceCredential"><code>VehicleInsuranceCredential<code></code></code></a></li>
+                <li><a href="#VehicleInsuranceInformation"><code>VehicleInsuranceInformation<code></code></code></a></li>
+                <li><a href="#VehicleRegistration"><code>VehicleRegistration<code></code></code></a></li>
+                <li><a href="#VehicleRegistrationCredential"><code>VehicleRegistrationCredential<code></code></code></a>
+                </li>
+                <li><a href="#VehicleTitle"><code>VehicleTitle<code></code></code></a></li>
+                <li><a href="#VehicleTitleCredential"><code>VehicleTitleCredential<code></code></code></a></li>
+              </ul>
+            </details>
+          </li>
+          <li><a href="https://w3id.org/vvc/v1rc3" typeof="jsonld:Context"><code>https://w3id.org/vvc/v1rc2</code></a>
+            <details>
+              <summary>term list</summary>
+              <ul>
+                <li><a href="#bodyType"><code>bodyType<code></code></code></a></li>
+                <li><a href="#brand"><code>brand<code></code></code></a></li>
+                <li><a href="#controlNumber"><code>controlNumber<code></code></code></a></li>
+                <li><a href="#coverageAmount"><code>coverageAmount<code></code></code></a></li>
+                <li><a href="#designations"><code>designations<code></code></code></a></li>
+                <li><a href="#equipmentTrustNumber"><code>equipmentTrustNumber<code></code></code></a></li>
+                <li><a href="#fuelType"><code>fuelType<code></code></code></a></li>
+                <li><a href="#insuranceProvider"><code>insuranceProvider<code></code></code></a></li>
+                <li><a href="#licensePlateIdentifier"><code>licensePlateIdentifier<code></code></code></a></li>
+                <li><a href="#lienholder"><code>lienholder<code></code></code></a></li>
+                <li><a href="#lienholderReleaseDate"><code>lienholderReleaseDate<code></code></code></a></li>
+                <li><a href="#manufacturer"><code>manufacturer<code></code></code></a></li>
+                <li><a href="#motorcycleEngineNumber"><code>motorcycleEngineNumber<code></code></code></a></li>
+                <li><a href="#numberOfAxles"><code>numberOfAxles<code></code></code></a></li>
+                <li><a href="#odometerReading"><code>odometerReading<code></code></code></a></li>
+                <li><a href="#owner"><code>owner<code></code></code></a></li>
+                <li><a href="#ownerSaleRequirements"><code>ownerSaleRequirements<code></code></code></a></li>
+                <li><a href="#policyEndDate"><code>policyEndDate<code></code></code></a></li>
+                <li><a href="#policyNumber"><code>policyNumber<code></code></code></a></li>
+                <li><a href="#policyStartDate"><code>policyStartDate<code></code></code></a></li>
+                <li><a href="#provenanceResource"><code>provenanceResource<code></code></code></a></li>
+                <li><a href="#purchaseDate"><code>purchaseDate<code></code></code></a></li>
+                <li><a href="#registeringOrganization"><code>registeringOrganization<code></code></code></a></li>
+                <li><a href="#registrationExpirationDate"><code>registrationExpirationDate<code></code></code></a></li>
+                <li><a href="#registrationStartDate"><code>registrationStartDate<code></code></code></a></li>
+                <li><a href="#titleIssueDate"><code>titleIssueDate<code></code></code></a></li>
+                <li><a href="#vehicleIdentificationNumber"><code>vehicleIdentificationNumber<code></code></code></a></li>
+                <li><a href="#vehicleModelDate"><code>vehicleModelDate<code></code></code></a></li>
+                <li><a href="#weight"><code>weight<code></code></code></a></li>
+                <li><a href="#isInsured"><code>isInsured<code></code></code></a></li>
+                <li><a href="#numberOfCylinders"><code>numberOfCylinders<code></code></code></a></li>
+                <li><a href="#feesPaid"><code>feesPaid<code></code></code></a></li>
+                <li><a href="#weightClass"><code>weightClass<code></code></code></a></li>
+                <li><a href="#vehicleType"><code>vehicleType<code></code></code></a></li>
+                <li><a href="#vesselType"><code>vesselType<code></code></code></a></li>
+                <li><a href="#motivePower"><code>motivePower<code></code></code></a></li>
+                <li><a href="#FirstSaleInformation"><code>FirstSaleInformation<code></code></code></a></li>
+                <li><a href="#VehicleInsuranceCredential"><code>VehicleInsuranceCredential<code></code></code></a></li>
+                <li><a href="#VehicleInsuranceInformation"><code>VehicleInsuranceInformation<code></code></code></a></li>
+                <li><a href="#VehicleRegistration"><code>VehicleRegistration<code></code></code></a></li>
+                <li><a href="#VehicleRegistrationCredential"><code>VehicleRegistrationCredential<code></code></code></a>
+                </li>
+                <li><a href="#VehicleTitle"><code>VehicleTitle<code></code></code></a></li>
+                <li><a href="#VehicleTitleCredential"><code>VehicleTitleCredential<code></code></code></a></li>
+              </ul>
+            </details>
+          </li>
         </ul>
       </section>
 

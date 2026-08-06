@@ -3,12 +3,12 @@ vocab:
   value: https://w3id.org/vvc
 ontology:
   - property: dc:title
-    value: Vehicle Credentials Vocabulary
+    value: Verifiable Vehicle Credentials v0.1
   - property: dc:description
     value: |-
       <div>
-          <h2>Introduction to the Vehicle Credentials Vocabulary</h2>
-          <p>The Vehicle Credentials Vocabulary provides a clear way to describe important information about vehicles and their ownership. This vocabulary simplifies communication about vehicles by ensuring everyone uses the same terms and definitions. By having a common language, misunderstandings can be reduced when sharing information about vehicles.</p>
+          <h2>Introduction to the Verifiable Vehicle Credentials Vocabulary</h2>
+          <p>The Verifiable Vehicle Credentials Vocabulary provides a clear way to describe important information about vehicles and their ownership. This vocabulary simplifies communication about vehicles by ensuring everyone uses the same terms and definitions. By having a common language, misunderstandings can be reduced when sharing information about vehicles.</p>
           
           <p>This vocabulary is beneficial for many reasons. It allows for consistent data sharing between different parties involved in the vehicle industry. Whether it's a car manufacturer, dealership, insurance company, or government agency, everyone can have a shared understanding. This improves efficiency and helps to streamline processes, making it easier to handle vehicle credentials quickly and accurately.</p>
           
@@ -21,13 +21,12 @@ ontology:
   - property: dc:abstract
     value: >-
       The Vehicle Credentials Vocabulary is designed to help organize and share
-      information about vehicles and their ownership. It includes
-      terms and definitions that describe different aspects of vehicles, such as
-      their specifications, registration details, insurance information, and ownership information.
-      This vocabulary is useful for anyone involved in vehicle management, whether
-      they are car owners, dealerships, or government agencies. By using this
-      vocabulary, all parties can communicate clearly and effectively about
-      vehicles, making it easier to track and manage important credentials.
+      information about vehicles and their ownership. It includes terms and
+      definitions that describe different aspects of vehicles, such as their
+      specifications, registration details, insurance information, and ownership
+      information. This vocabulary is useful for anyone involved with digital
+      credentials related to vehicles, whether they are car owners, dealerships,
+      or government agencies.
 class:
   - id: FirstSaleInformation
     label: First Sale Information
@@ -89,6 +88,27 @@ class:
       any liens against the vehicle. It is used in various legal and financial
       transactions involving the vehicle.
     context: https://w3id.org/vvc
+  - id: schema:Person
+    label: Person
+    defined_by: https://schema.org/Person
+  - id: schema:Organization
+    label: Organization
+    defined_by: https://schema.org/Organization
+  - id: schema:Observation
+    label: Observation
+    defined_by: https://schema.org/Observation
+  - id: schema:PostalAddress
+    label: Postal Address
+    defined_by: https://schema.org/PostalAddress
+  - id: schema:Certification
+    label: Certification
+    defined_by: https://schema.org/Certification
+  - id: schema:MonetaryAmount
+    label: Monetary Amount
+    defined_by: https://schema.org/MonetaryAmount
+  - id: schema:QuantitativeValue
+    label: Quantitative Value
+    defined_by: https://schema.org/QuantitativeValue
 property:
   - id: bodyType
     label: Body Type
@@ -330,7 +350,7 @@ property:
     context: https://w3id.org/vvc
   - id: vehicleIdentificationNumber
     label: Vehicle Identification Number
-    range: schema:vehicleIdentificationNumber
+    range: xsd:string
     comment: >-
       A unique identifier assigned to a vehicle, commonly known as the Vehicle
       Identification Number (VIN). This number is used to track the vehicle's
@@ -356,4 +376,52 @@ property:
       kilograms or pounds. This information is crucial for compliance with
       transportation regulations, assessing performance metrics, and determining
       towing capacities.
+    context: https://w3id.org/vvc
+  - id: feesPaid
+    label: Fees Paid
+    comment: >-
+      The feesPaid property denotes the fees paid as part of the transaction,
+      registration, insurance, or other event represented by a credential.
+    context: https://w3id.org/vvc
+  - id: isInsured
+    label: Is Insured
+    comment: >-
+      The isInsured property indicates whether the vehicle in question is covered
+      under an insurance policy.
+    context: https://w3id.org/vvc
+  - id: motivePower
+    label: Motive Power
+    comment: >-
+      The motivePower property allows expression of a vehicle's propulsion
+      mechanism.
+    context: https://w3id.org/vvc
+  - id: numberOfCylinders
+    label: Number of Cylinders
+    comment: >-
+      The numberOfCylinders property denotes the number of cylinders in a
+      vehicle's engine, if applicable.
+    context: https://w3id.org/vvc
+  - id: policyHolder
+    label: Policy Holder
+    comment: >-
+      The Policy Holder is the person or organization that holds the policy in
+      question.
+    context: https://w3id.org/vvc
+  - id: vehicleType
+    label: Vehicle Type
+    comment: >-
+      The vehicleType property allows general expression of a vehicle's type
+      classification.
+    context: https://w3id.org/vvc
+  - id: vesselType
+    label: Vessel Type
+    comment: >-
+      The vesselType property allows expression of a watercraft's type
+      classification.
+    context: https://w3id.org/vvc
+  - id: weightClass
+    label: Weight Class
+    comment: >-
+      The weightClass property allows general expression of a vehicle's weight
+      classification.
     context: https://w3id.org/vvc
