@@ -1,0 +1,54 @@
+name: YAML Diff on PR
+
+permissions:
+      contents: read
+      pull-requests: write
+
+on:
+  pull_request:
+    paths:
+      - 'vocabulary.yml'
+
+jobs:
+  ## run the following on PRs
+  osv-scan-pr:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          submodules: false
+          # Do persist credentials, as we need it for the git checkout later
+          persist-credentials: true
+      - name: Checkout base branch
+        run: |
+          git checkout $GITHUB_BASE_REF
+          git submodule update --recursive
+      - name: "Save base vocabulary.yml"
+        run: |
+          cp vocabulary.yml /tmp/base_vocabulary.yml
+      - name: Checkout head branch
+        run: |
+          git checkout $GITHUB_HEAD_REF
+          git submodule update --recursive
+      - name: Save head vocabulary.yml
+        run: |
+          cp vocabulary.yml /tmp/vocabulary.yml
+      - name: Diff base branch `vocabulary.yml` vs. PR branch `vocabulary.yml`
+        id: diff
+        uses: josephburnett/jd@d573a43e1d0191fa324a6d3d36b69bbe3fec43ef # v2.3.0
+        with:
+          args: /tmp/base_vocabulary.yml /tmp/vocabulary.yml
+      - name: Comment PR with diff
+        if: steps.diff.outputs.diff != ''
+        uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
+        with:
+          message: |
+            ## Diff between base and head `vocabulary.yml`
+
+            ```diff
+            ${{ steps.diff.outputs.diff }}
+            ```
