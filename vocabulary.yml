@@ -206,10 +206,12 @@ property:
     label: Coverage Type
     domain:
       - vvc:CoverageLimit
-    range: xsd:string
+    one_of: [bodilyInjury, propertyDamage, personalInjuryProtection,
+      medicalPayments, uninsuredMotorist, underinsuredMotorist,
+      accidentBenefits, directCompensationPropertyDamage, civilLiability]
     comment: >-
       Code identifying the category of coverage for this CoverageLimit.
-      Recommended values: "bodilyInjury" (BI; required in all US states except
+      Allowed values: "bodilyInjury" (BI; required in all US states except
       NH no-mandate and FL PIP-only; all Canadian provinces; all EU member
       states), "propertyDamage" (PD; required US/Canada/EU),
       "personalInjuryProtection" (PIP; mandatory in US no-fault states: DE,
