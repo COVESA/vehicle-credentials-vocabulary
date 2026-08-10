@@ -9,13 +9,13 @@ ontology:
       <div>
           <h2>Introduction to the Vehicle Credentials Vocabulary</h2>
           <p>The Vehicle Credentials Vocabulary provides a clear way to describe important information about vehicles and their ownership. This vocabulary simplifies communication about vehicles by ensuring everyone uses the same terms and definitions. By having a common language, misunderstandings can be reduced when sharing information about vehicles.</p>
-          
+
           <p>This vocabulary is beneficial for many reasons. It allows for consistent data sharing between different parties involved in the vehicle industry. Whether it's a car manufacturer, dealership, insurance company, or government agency, everyone can have a shared understanding. This improves efficiency and helps to streamline processes, making it easier to handle vehicle credentials quickly and accurately.</p>
-          
+
           <p>Various market verticals can benefit from using the Vehicle Credentials Vocabulary. Automotive manufacturers can standardize their vehicle specifications, while dealerships can provide better information to potential buyers. Insurance companies can use the vocabulary to assess risk and evaluate policies based on clear vehicle data. Additionally, government agencies can improve their record-keeping and make vehicle information more accessible to the public.</p>
-          
+
           <p>Use cases for the vocabulary include vehicle registration, tracking ownership changes, and sharing technical specifications between manufacturers and dealerships. It is also valuable in managing insurance claims and assessing vehicle values. The vocabulary meets the requirements of being comprehensive and adaptable, which means it can evolve along with changes in the vehicle industry.</p>
-          
+
           <p>In summary, the Vehicle Credentials Vocabulary is a powerful tool that brings clarity and consistency to the vehicle industry. By facilitating better communication and data sharing, this vocabulary can help a wide range of businesses and organizations work more effectively together. It sets the stage for improved operations and better customer experiences throughout the vehicle lifecycle.</p>
       </div>
   - property: dc:abstract
@@ -29,6 +29,22 @@ ontology:
       vocabulary, all parties can communicate clearly and effectively about
       vehicles, making it easier to track and manage important credentials.
 class:
+  - id: CoverageType
+    label: Coverage Type
+    comment: >-
+      An enumerated class whose individuals identify the category of insurance
+      coverage carried by a CoverageLimit. New individuals may be defined
+      outside this vocabulary (open enumeration).
+    context: https://w3id.org/vvc
+  - id: CoverageLimit
+    label: Coverage Limit
+    comment: >-
+      A structured representation of a single insurance coverage type and its
+      monetary limits. A ProofOfInsuranceCredential references one or more
+      CoverageLimit instances — one per required coverage type (e.g. bodily
+      injury, property damage, PIP, uninsured motorist). Each carries a
+      coverageType code and per-person and/or per-accident monetary amounts.
+    context: https://w3id.org/vvc
   - id: FirstSaleInformation
     label: First Sale Information
     comment: >-
@@ -36,6 +52,17 @@ class:
       transfer of ownership of a vehicle. This class encompasses data such as
       the sale date, selling party, and purchasing party, which are vital for
       documenting the vehicle's ownership history.
+    context: https://w3id.org/vvc
+  - id: ProofOfInsuranceCredential
+    label: Proof of Insurance Credential
+    comment: >-
+      A Verifiable Credential serving as legally recognized evidence that a
+      vehicle carries the minimum compulsory third-party liability coverage
+      required by the jurisdiction of operation. Equivalent to the insurance
+      ID card (US), pink slip (Canada), national insurance certificate (EU),
+      and International Motor Insurance Certificate / Green Card (EU
+      cross-border). Extends VehicleInsuranceCredential with structured
+      per-type coverage limits and jurisdiction validity fields.
     context: https://w3id.org/vvc
   - id: VehicleInsuranceCredential
     label: Vehicle Insurance Credential
@@ -125,6 +152,65 @@ property:
       policy will pay in the event of a claim. This information is crucial for
       understanding the financial protection offered by the policy.
     context: https://w3id.org/vvc
+  - id: coverageLimitPerAccident
+    label: Coverage Limit Per Accident
+    domain:
+      - vvc:CoverageLimit
+    range: schema:MonetaryAmount
+    comment: >-
+      Maximum amount payable for all claims from a single accident. Applies to
+      bodily injury (aggregate) and property damage. US state BI per-accident
+      minimums range from $30,000 to $100,000; PD from $5,000 to $25,000.
+      Canadian minimum third-party liability is CAD $200,000 in most provinces
+      (CAD $500,000 NS; CAD $50,000 private portion QC). EU directive floor:
+      €6,450,000 BI per accident; €1,300,000 PD per accident.
+    context: https://w3id.org/vvc
+  - id: coverageLimitPerPerson
+    label: Coverage Limit Per Person
+    domain:
+      - vvc:CoverageLimit
+    range: schema:MonetaryAmount
+    comment: >-
+      Maximum amount payable for a single injured person in one accident.
+      Applies primarily to bodily injury liability. Expressed as a
+      schema:MonetaryAmount with schema:value and schema:currency (ISO 4217).
+      US state minimums range from $15,000 (LA, PA) to $50,000 (AK, ME, MI,
+      NC, VA). EU directive floor: €1,300,000 per victim.
+    context: https://w3id.org/vvc
+  - id: coverageLimit
+    label: Coverage Limit
+    domain:
+      - vvc:VehicleInsuranceInformation
+      - vvc:ProofOfInsuranceCredential
+    range: vvc:CoverageLimit
+    comment: >-
+      Links to one or more CoverageLimit instances, each describing a distinct
+      coverage type and its per-person and/or per-accident monetary limits.
+      Use in place of the single-valued vvc:coverageAmount when per-type
+      regulatory breakdowns are required.
+    context: https://w3id.org/vvc
+  - id: coverageType
+    label: Coverage Type
+    domain:
+      - vvc:CoverageLimit
+    range: vvc:CoverageType
+    one_of:
+      - vvc:bodilyInjury
+      - vvc:propertyDamage
+      - vvc:personalInjuryProtection
+      - vvc:medicalPayments
+      - vvc:uninsuredMotorist
+      - vvc:underinsuredMotorist
+      - vvc:accidentBenefits
+      - vvc:directCompensationPropertyDamage
+      - vvc:civilLiability
+    open_enumeration: true
+    comment: >-
+      Identifies the category of coverage for this CoverageLimit. The value
+      SHOULD be one of the defined vvc:CoverageType individuals; the enumeration
+      is open to accommodate jurisdiction-specific coverage types not listed
+      here.
+    context: https://w3id.org/vvc
   - id: designations
     label: Designations
     range: xsd:string
@@ -162,6 +248,56 @@ property:
       that issues the insurance policy for the vehicle. This property is
       essential for managing policy details, facilitating claims processing, and
       ensuring compliance with insurance requirements.
+    context: https://w3id.org/vvc
+  - id: insuredAddress
+    label: Insured Address
+    domain:
+      - vvc:VehicleInsuranceInformation
+      - vvc:ProofOfInsuranceCredential
+    range: schema:PostalAddress
+    comment: >-
+      The mailing address of the named insured as it appears on the policy.
+      Required on most US insurance ID cards and Canadian pink slips. In the
+      EU Green Card context this appears in Box 7 alongside the policyholder
+      name.
+    context: https://w3id.org/vvc
+  - id: insurerCode
+    label: Insurer Code
+    domain:
+      - vvc:VehicleInsuranceInformation
+      - vvc:ProofOfInsuranceCredential
+    range: xsd:string
+    comment: >-
+      The bureau or insurer code identifying the issuing insurance undertaking
+      within the Green Card System (Council of Bureaux). Appears in Box 4 of
+      the International Motor Insurance Certificate; the country prefix must
+      match Box 1 and the insurer name in Box 8. Analogous to naicNumber in
+      the US context.
+    context: https://w3id.org/vvc
+  - id: issuingBureau
+    label: Issuing Bureau
+    domain:
+      - vvc:ProofOfInsuranceCredential
+    range: schema:Organization
+    comment: >-
+      The national Green Card bureau responsible for issuing or countersigning
+      the International Motor Insurance Certificate. Relevant for cross-border
+      travel to non-EEA countries such as Turkey, Ukraine, Moldova,
+      Switzerland, and Andorra, where the physical Green Card is required.
+    context: https://w3id.org/vvc
+  - id: jurisdictionValidity
+    label: Jurisdiction Validity
+    domain:
+      - vvc:VehicleInsuranceInformation
+      - vvc:ProofOfInsuranceCredential
+    range: xsd:string
+    comment: >-
+      ISO 3166-1 alpha-2 country code or ISO 3166-2 subdivision code
+      identifying a jurisdiction where this coverage is legally valid (e.g.
+      "US-CA" for California, "CA-ON" for Ontario, "FR" for France). Multiple
+      values indicate multi-jurisdiction coverage. For EU Green Card purposes
+      maps to the countries listed in Box 6; EEA member states are represented
+      as a single grouped block.
     context: https://w3id.org/vvc
   - id: licensePlateIdentifier
     label: License Plate Identifier
@@ -201,6 +337,20 @@ property:
       of the vehicle, compliance with regulatory standards, and addressing any
       manufacturer recalls or warranties.
     context: https://w3id.org/vvc
+  - id: minimumLegalCoverageConfirmed
+    label: Minimum Legal Coverage Confirmed
+    domain:
+      - vvc:VehicleInsuranceInformation
+      - vvc:ProofOfInsuranceCredential
+    range: xsd:boolean
+    comment: >-
+      Boolean indicating the insurer certifies that the policy meets or exceeds
+      the minimum compulsory insurance required by the jurisdiction(s) in
+      jurisdictionValidity. Corresponds to the "indication of compulsory
+      insurance cover" required on EU certificates under Directive 2009/103/EC
+      Article 16, and the implied attestation on US ID cards and Canadian pink
+      slips.
+    context: https://w3id.org/vvc
   - id: motorcycleEngineNumber
     label: Motorcycle Engine Number
     range: xsd:string
@@ -209,6 +359,32 @@ property:
       of a motorcycle. This property is essential for tracking engine
       specifications, verifying identity, and facilitating compliance with
       regulatory requirements regarding vehicle identification.
+    context: https://w3id.org/vvc
+  - id: naicNumber
+    label: NAIC Number
+    domain:
+      - vvc:VehicleInsuranceInformation
+      - vvc:ProofOfInsuranceCredential
+    range: xsd:string
+    comment: >-
+      The National Association of Insurance Commissioners company code
+      uniquely identifying the insurance carrier. Required on US insurance ID
+      cards. Analogous to the EU Green Card insurer code (see insurerCode).
+    context: https://w3id.org/vvc
+  - id: namedInsured
+    label: Named Insured
+    domain:
+      - vvc:VehicleInsuranceInformation
+      - vvc:ProofOfInsuranceCredential
+    range:
+      - schema:Person
+      - schema:Organization
+    comment: >-
+      The individual or legal entity explicitly named on the policy as the
+      primary insured party. Required on US insurance ID cards, Canadian pink
+      slips, and EU motor insurance certificates. Distinct from vvc:owner
+      (registered owner) and vvc:policyHolder (contracting party) when these
+      differ.
     context: https://w3id.org/vvc
   - id: numberOfAxles
     label: Number of Axles
@@ -356,4 +532,65 @@ property:
       kilograms or pounds. This information is crucial for compliance with
       transportation regulations, assessing performance metrics, and determining
       towing capacities.
+    context: https://w3id.org/vvc
+individual:
+  - id: bodilyInjury
+    upper_value: vvc:CoverageType
+    label: Bodily Injury
+    comment: >-
+      Covers third-party bodily injury liability (BI). Required in all US
+      states except NH (no-mandate) and FL (PIP-only); required in all
+      Canadian provinces and all EU member states.
+    context: https://w3id.org/vvc
+  - id: propertyDamage
+    upper_value: vvc:CoverageType
+    label: Property Damage
+    comment: >-
+      Covers third-party property damage liability (PD). Required in the US,
+      Canada, and EU.
+    context: https://w3id.org/vvc
+  - id: personalInjuryProtection
+    upper_value: vvc:CoverageType
+    label: Personal Injury Protection
+    comment: >-
+      Personal Injury Protection (PIP). Mandatory in US no-fault states: DE,
+      FL, HI, KS, KY, MA, MI, MN, NJ, NY, ND, OR, UT.
+    context: https://w3id.org/vvc
+  - id: medicalPayments
+    upper_value: vvc:CoverageType
+    label: Medical Payments
+    comment: >-
+      Medical Payments coverage (MedPay). Required in ME, NH, and PA.
+    context: https://w3id.org/vvc
+  - id: uninsuredMotorist
+    upper_value: vvc:CoverageType
+    label: Uninsured Motorist
+    comment: >-
+      Uninsured Motorist coverage (UM). Required in approximately 22 US states.
+    context: https://w3id.org/vvc
+  - id: underinsuredMotorist
+    upper_value: vvc:CoverageType
+    label: Underinsured Motorist
+    comment: >-
+      Underinsured Motorist coverage (UIM).
+    context: https://w3id.org/vvc
+  - id: accidentBenefits
+    upper_value: vvc:CoverageType
+    label: Accident Benefits
+    comment: >-
+      Statutory Accident Benefits (SABS). Required in most Canadian provinces.
+    context: https://w3id.org/vvc
+  - id: directCompensationPropertyDamage
+    upper_value: vvc:CoverageType
+    label: Direct Compensation Property Damage
+    comment: >-
+      Direct Compensation Property Damage (DCPD). Required in Canadian
+      provinces: AB, NB, NL, NS, ON, PE, QC.
+    context: https://w3id.org/vvc
+  - id: civilLiability
+    upper_value: vvc:CoverageType
+    label: Civil Liability
+    comment: >-
+      General bodily injury and property damage liability term used in EU and
+      Canadian contexts (BI+PD combined).
     context: https://w3id.org/vvc
