@@ -96,17 +96,19 @@
       "titleIssueDate": "2024-02-01",
       "licensePlateIdentifier": "ABC1234",
       "equipmentTrustNumber": "12345678",
-      "lienholder": {
-        "type": "Organization",
-        "name": "USEDCAR LIENHOLDER",
-        "address": {
-          "type": "PostalAddress",
-          "streetAddress": "456 LEMON AVE",
-          "addressLocality": "UTOPOLIS",
-          "addressRegion": "UTOPIA",
-          "postalCode": "12345"
+      "lienholder": [
+        {
+          "type": "Organization",
+          "name": "USEDCAR LIENHOLDER",
+          "address": {
+            "type": "PostalAddress",
+            "streetAddress": "456 LEMON AVE",
+            "addressLocality": "UTOPOLIS",
+            "addressRegion": "UTOPIA",
+            "postalCode": "12345"
+          }
         }
-      },
+      ],
       "lienholderReleaseDate": "2020-01-01",
       "controlNumber": "12345678",
       "description": "OFF HIGHWAY",
@@ -177,10 +179,14 @@
           }
         }
       ],
-      "validFrom": "2024-02-01",
+      "registrationIssueDate": "2024-01-31",
       "registrationStartDate": "2024-02-01",
       "registrationExpirationDate": "2025-02-01",
       "licensePlateIdentifier": "ABC1234",
+      "licenseTypeCode": "11",
+      "vlfClass": "FT",
+      "feeBasisYear": "2024",
+      "vehicleTypeCode": "15"
     },
     "proof": {
       "type": "DataIntegrity",

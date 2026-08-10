@@ -123,6 +123,9 @@ class:
   - id: schema:Certification
     label: Certification
     defined_by: https://schema.org/Certification
+  - id: schema:Date
+    label: Date
+    defined_by: https://schema.org/Date
   - id: schema:MonetaryAmount
     label: Monetary Amount
     defined_by: https://schema.org/MonetaryAmount
@@ -319,6 +322,15 @@ property:
       public roads and in legal documentation, aiding in tracking ownership,
       registration, and compliance with local regulations.
     context: https://w3id.org/vvc
+  - id: licenseTypeCode
+    label: License Type Code
+    range: xsd:string
+    comment: >-
+      A jurisdiction-specific code assigned by a vehicle registration authority
+      to identify the type of license or registration associated with a vehicle
+      or vessel. This is distinct from a vehicle type code, which classifies the
+      vehicle itself.
+    context: https://w3id.org/vvc
   - id: lienholder
     label: Lienholder
     range:
@@ -473,7 +485,16 @@ property:
     context: https://w3id.org/vvc
   - id: purchaseDate
     label: Purchase Date
-    range: xsd:dateTime
+    range: schema:Date
+    comment: >-
+      The Purchase Date specifies the date on which a vehicle was acquired by
+      the owner. This property is important for tracking ownership history,
+      determining warranty eligibility, and assessing vehicle depreciation over
+      time.
+    context: https://w3id.org/vvc
+  - id: firstSold
+    label: First Sold
+    range: vvc:FirstSaleInformation
     comment: >-
       The Purchase Date specifies the date on which a vehicle was acquired by
       the owner. This property is important for tracking ownership history,
@@ -488,6 +509,13 @@ property:
       governmental entity responsible for the registration of the vehicle. This
       property is essential for verifying the legitimacy of the registration and
       for facilitating communication regarding registration matters.
+    context: https://w3id.org/vvc
+  - id: registrationIssueDate
+    label: Registration Issue Date
+    range: xsd:dateTime
+    comment: >-
+      The Registration Issue Date indicates the date on which the vehicle
+      registration was processed.
     context: https://w3id.org/vvc
   - id: registrationExpirationDate
     label: Registration Expiration Date
@@ -527,7 +555,7 @@ property:
     context: https://w3id.org/vvc
   - id: vehicleModelDate
     label: Vehicle Model Date
-    range: xsd:dateTime
+    range: schema:Date
     comment: >-
       The Vehicle Model Date specifies the date associated with the specific
       model of a vehicle, indicating when the model was introduced or last
@@ -543,6 +571,15 @@ property:
       kilograms or pounds. This information is crucial for compliance with
       transportation regulations, assessing performance metrics, and determining
       towing capacities.
+    context: https://w3id.org/vvc
+  - id: feeBasisYear
+    label: Fee Basis Year
+    range: xsd:gYear
+    comment: >-
+      The year used with the VLF class to determine the Vehicle License Fee and
+      its depreciation schedule. It is usually assigned when ownership changes,
+      a nonresident purchases the vehicle, or an alteration places the vehicle
+      in a different VLF class.
     context: https://w3id.org/vvc
   - id: feesPaid
     label: Fees Paid
@@ -574,10 +611,10 @@ property:
       The Policy Holder is the person or organization that holds the policy in
       question.
     context: https://w3id.org/vvc
-  - id: vehicleType
-    label: Vehicle Type
+  - id: vehicleTypeCode
+    label: Vehicle Type Code
     comment: >-
-      The vehicleType property allows general expression of a vehicle's type
+      The vehicleTypeCode property allows general expression of a vehicle's type
       classification.
     context: https://w3id.org/vvc
   - id: vesselType
@@ -585,6 +622,13 @@ property:
     comment: >-
       The vesselType property allows expression of a watercraft's type
       classification.
+    context: https://w3id.org/vvc
+  - id: vlfClass
+    label: VLF Class
+    range: xsd:string
+    comment: >-
+      A code identifying the vehicle value range used to determine a Vehicle
+      License Fee (VLF).
     context: https://w3id.org/vvc
   - id: weightClass
     label: Weight Class
