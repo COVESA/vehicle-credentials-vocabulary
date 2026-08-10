@@ -17,7 +17,7 @@ jobs:
       matrix:
         node-version: [24.x]
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           submodules: false
@@ -39,16 +39,16 @@ jobs:
           cp vocabulary.yml /tmp/vocabulary.yml
       - name: Diff base branch `vocabulary.yml` vs. PR branch `vocabulary.yml`
         id: diff
-        uses: josephburnett/jd@d573a43e1d0191fa324a6d3d36b69bbe3fec43ef # v2.3.0
+        uses: josephburnett/jd@e37eef06c8638ac7a223d21fe3ff14082c5c0700 # v2.5.0
         with:
           args: /tmp/base_vocabulary.yml /tmp/vocabulary.yml
       - name: Comment PR with diff
-        if: steps.diff.outputs.diff != ''
+        if: steps.diff.outputs.output != ''
         uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
         with:
           message: |
             ## Diff between base and head `vocabulary.yml`
 
             ```diff
-            ${{ steps.diff.outputs.diff }}
+            ${{ steps.diff.outputs.output }}
             ```
