@@ -170,8 +170,8 @@ property:
       US state minimums range from $15,000 (LA, PA) to $50,000 (AK, ME, MI,
       NC, VA). EU directive floor: €1,300,000 per victim.
     context: https://w3id.org/vvc
-  - id: coverageLimits
-    label: Coverage Limits
+  - id: coverageLimit
+    label: Coverage Limit
     domain:
       - vvc:VehicleInsuranceInformation
       - vvc:ProofOfInsuranceCredential
