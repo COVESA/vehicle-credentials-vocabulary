@@ -43,4 +43,5 @@ following command can be used to create a release:
 $ npm run release -- v1rc1
 ```
 
-This will result in a `dist/contexts/v1rc1.jsonld` file.
+This creates and stages the `dist/contexts/v1rc1.jsonld` file. Review the
+generated changes, then commit them to finish the release.
