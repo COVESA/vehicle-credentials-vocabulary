@@ -123,9 +123,6 @@ class:
   - id: schema:Certification
     label: Certification
     defined_by: https://schema.org/Certification
-  - id: schema:Date
-    label: Date
-    defined_by: https://schema.org/Date
   - id: schema:MonetaryAmount
     label: Monetary Amount
     defined_by: https://schema.org/MonetaryAmount
@@ -485,7 +482,7 @@ property:
     context: https://w3id.org/vvc
   - id: purchaseDate
     label: Purchase Date
-    range: schema:Date
+    range: xsd:date
     comment: >-
       The Purchase Date specifies the date on which a vehicle was acquired by
       the owner. This property is important for tracking ownership history,
@@ -555,7 +552,7 @@ property:
     context: https://w3id.org/vvc
   - id: vehicleModelDate
     label: Vehicle Model Date
-    range: schema:Date
+    range: xsd:date
     comment: >-
       The Vehicle Model Date specifies the date associated with the specific
       model of a vehicle, indicating when the model was introduced or last
