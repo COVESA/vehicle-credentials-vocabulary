@@ -3,7 +3,7 @@ vocab:
   value: https://w3id.org/vvc
 ontology:
   - property: dc:title
-    value: Verifiable Vehicle Credentials v0.1
+    value: Verifiable Vehicle Credentials v1.0
   - property: dc:description
     value: |-
       <div>
