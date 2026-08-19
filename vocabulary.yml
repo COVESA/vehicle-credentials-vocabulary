@@ -1,6 +1,9 @@
 vocab:
   id: vvc
   value: https://w3id.org/vvc#
+prefix:
+  - id: schema
+    value: https://schema.org/
 ontology:
   - property: dc:title
     value: Verifiable Vehicle Credentials v1.0
