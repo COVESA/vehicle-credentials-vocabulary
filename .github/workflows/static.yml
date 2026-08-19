@@ -1,10 +1,14 @@
-# Simple workflow for deploying static content to GitHub Pages
+# Provides previews on PRs and deploys to main branch on push (Version Locked)
 name: Deploy static content to Pages
 
 on:
-  # Runs on pushes targeting the default branch
+  # 1. Runs on pushes targeting the default branch (Production Deployment)
   push:
-    branches: ["main"]
+    branches: ["main"] # Change 'main' if your production branch name is different
+
+  # 2. Provides previews when a Pull Request is opened or updated
+  pull_request:
+    types: [opened, synchronize]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -15,39 +19,51 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build_and_preview:
     runs-on: ubuntu-latest
     steps:
+      # --- Build Steps (Always run) ---
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+
       - name: Setup Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 24
-      - name: Build vocabulary
+
+      - name: Install dependencies & Build vocabulary
         run: |
           npm ci
           npm run build
+
+      # --- Artifact Upload (Creates the preview artifact) ---
       - name: Upload artifact
+        id: upload_artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
-          # Upload entire repository
           path: 'dist/'
+
+  # This job handles the final deployment step, ONLY when deploying to main.
+  deploy:
+    needs: build_and_preview
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    # Conditional execution ensures this only runs on a push to 'main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
