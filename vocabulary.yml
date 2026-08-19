@@ -1,6 +1,6 @@
 vocab:
   id: vvc
-  value: https://w3id.org/vvc
+  value: https://w3id.org/vvc#
 ontology:
   - property: dc:title
     value: Verifiable Vehicle Credentials v1.0
@@ -132,7 +132,6 @@ class:
 property:
   - id: bodyType
     label: Body Type
-    range: xsd:string
     comment: >-
       The Body Type property specifies the classification of a vehicle based on
       its physical design characteristics, such as sedan, coupe, SUV, or truck.
@@ -150,7 +149,6 @@ property:
     context: https://w3id.org/vvc
   - id: controlNumber
     label: Control Number
-    range: xsd:string
     comment: >-
       The Control Number is a unique identifier assigned to a vehicle or related
       documentation for tracking and management purposes. This property helps in
@@ -206,9 +204,6 @@ property:
     label: Coverage Type
     domain:
       - vvc:CoverageLimit
-    one_of: [bodilyInjury, propertyDamage, personalInjuryProtection,
-      medicalPayments, uninsuredMotorist, underinsuredMotorist,
-      accidentBenefits, directCompensationPropertyDamage, civilLiability]
     comment: >-
       Code identifying the category of coverage for this CoverageLimit.
       Allowed values: "bodilyInjury" (BI; required in all US states except
@@ -224,7 +219,6 @@ property:
     context: https://w3id.org/vvc
   - id: designations
     label: Designations
-    range: xsd:string
     comment: >-
       A collection of official titles or designations related to the vehicle's
       title status. This property may encompass various identifiers that
@@ -234,7 +228,6 @@ property:
     context: https://w3id.org/vvc
   - id: equipmentTrustNumber
     label: Equipment Trust Number
-    range: xsd:string
     comment: >-
       The Equipment Trust Number is a unique identifier associated with the
       financing or leasing trust of a piece of equipment. This property is used
@@ -244,7 +237,6 @@ property:
     context: https://w3id.org/vvc
   - id: fuelType
     label: Fuel Type
-    range: xsd:string
     comment: >-
       The Fuel Type property indicates the kind of fuel that a vehicle utilizes
       for operation, such as gasoline, diesel, electric, or hybrid. This
@@ -277,7 +269,6 @@ property:
     domain:
       - vvc:VehicleInsuranceInformation
       - vvc:ProofOfInsuranceCredential
-    range: xsd:string
     comment: >-
       The bureau or insurer code identifying the issuing insurance undertaking
       within the Green Card System (Council of Bureaux). Appears in Box 4 of
@@ -301,7 +292,6 @@ property:
     domain:
       - vvc:VehicleInsuranceInformation
       - vvc:ProofOfInsuranceCredential
-    range: xsd:string
     comment: >-
       ISO 3166-1 alpha-2 country code or ISO 3166-2 subdivision code
       identifying a jurisdiction where this coverage is legally valid (e.g.
@@ -312,7 +302,6 @@ property:
     context: https://w3id.org/vvc
   - id: licensePlateIdentifier
     label: License Plate Identifier
-    range: xsd:string
     comment: >-
       The License Plate Identifier is a unique alphanumeric code assigned to a
       vehicle's license plate. This property is used to identify the vehicle on
@@ -321,7 +310,6 @@ property:
     context: https://w3id.org/vvc
   - id: licenseTypeCode
     label: License Type Code
-    range: xsd:string
     comment: >-
       A jurisdiction-specific code assigned by a vehicle registration authority
       to identify the type of license or registration associated with a vehicle
@@ -373,7 +361,6 @@ property:
     context: https://w3id.org/vvc
   - id: motorcycleEngineNumber
     label: Motorcycle Engine Number
-    range: xsd:string
     comment: >-
       The Motorcycle Engine Number is a unique identifier assigned to the engine
       of a motorcycle. This property is essential for tracking engine
@@ -385,7 +372,6 @@ property:
     domain:
       - vvc:VehicleInsuranceInformation
       - vvc:ProofOfInsuranceCredential
-    range: xsd:string
     comment: >-
       The National Association of Insurance Commissioners company code
       uniquely identifying the insurance carrier. Required on US insurance ID
@@ -408,7 +394,7 @@ property:
     context: https://w3id.org/vvc
   - id: numberOfAxles
     label: Number of Axles
-    range: xsd:unsignedInt
+    range: xsd:integer
     comment: >-
       The Number of Axles property specifies the total count of axles on a
       vehicle. This information is important for regulatory compliance, vehicle
@@ -437,7 +423,6 @@ property:
     context: https://w3id.org/vvc
   - id: ownerSaleRequirements
     label: Owner Sale Requirements
-    range: xsd:string
     comment: >-
       A detailed description of the conditions and requirements that a vehicle
       owner must fulfill to sell their vehicle. This may include documentation
@@ -455,7 +440,6 @@ property:
     context: https://w3id.org/vvc
   - id: policyNumber
     label: Policy Number
-    range: xsd:string
     comment: >-
       The Policy Number property refers to the unique identifier assigned to an
       insurance policy covering a vehicle. This property is essential for
@@ -472,7 +456,6 @@ property:
     context: https://w3id.org/vvc
   - id: provenanceResource
     label: Provenance Resource
-    range: xsd:string
     comment: >-
       A reference to the source or origin of information regarding a vehicle's
       history, ownership, and other relevant details. This property may contain
@@ -542,7 +525,6 @@ property:
     context: https://w3id.org/vvc
   - id: vehicleIdentificationNumber
     label: Vehicle Identification Number
-    range: xsd:string
     comment: >-
       A unique identifier assigned to a vehicle, commonly known as the Vehicle
       Identification Number (VIN). This number is used to track the vehicle's
@@ -622,7 +604,6 @@ property:
     context: https://w3id.org/vvc
   - id: vlfClass
     label: VLF Class
-    range: xsd:string
     comment: >-
       A code identifying the vehicle value range used to determine a Vehicle
       License Fee (VLF).
