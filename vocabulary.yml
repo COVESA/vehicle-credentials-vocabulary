@@ -617,3 +617,87 @@ property:
       The weightClass property allows general expression of a vehicle's weight
       classification.
     context: https://w3id.org/vvc
+  - id: schema:name
+    label: Name
+    domain:
+      - schema:Person
+      - schema:Organization
+    defined_by: https://schema.org/name
+  - id: schema:value
+    label: Value
+    domain:
+      - schema:QuantitativeValue
+      - schema:Observation
+      - schema:MonetaryAmount
+    defined_by: https://schema.org/value
+  - id: schema:unitCode
+    label: Unit Code
+    domain:
+      - schema:Observation
+      - schema:QuantitativeValue
+    defined_by: https://schema.org/unitCode
+  - id: schema:currency
+    label: Currency
+    domain:
+      - schema:MonetaryAmount
+    defined_by: https://schema.org/currency
+  - id: schema:certificationIdentification
+    label: Certification Identification
+    domain:
+      - schema:Certification
+    defined_by: https://schema.org/certificationIdentification
+  - id: schema:about
+    label: About
+    domain:
+      - schema:Certification
+    defined_by: https://schema.org/about
+  - id: schema:streetAddress
+    label: Street Address
+    domain:
+      - schema:PostalAddress
+    defined_by: https://schema.org/streetAddress
+  - id: schema:addressRegion
+    label: Address Region
+    domain:
+      - schema:PostalAddress
+    defined_by: https://schema.org/addressRegion
+  - id: schema:addressLocality
+    label: Address Locality
+    domain:
+      - schema:PostalAddress
+    defined_by: https://schema.org/addressLocality
+  - id: schema:postalCode
+    label: Postal Code
+    domain:
+      - schema:PostalAddress
+    defined_by: https://schema.org/postalCode
+  - id: schema:variableMeasured
+    label: Variable Measured
+    domain:
+      - schema:Observation
+    defined_by: https://schema.org/variableMeasured
+  - id: schema:description
+    label: Description
+    domain:
+      - schema:Observation
+      - schema:Person
+      - schema:Organization
+    defined_by: https://schema.org/description
+  - id: schema:observationDate
+    label: Observation Date
+    domain:
+      - schema:Observation
+    range: xsd:dateTime
+    defined_by: https://schema.org/observationDate
+  - id: schema:hasCertification
+    label: Has Certification
+    domain:
+      - schema:Organization
+      - schema:Person
+    defined_by: https://schema.org/hasCertification
+  - id: schema:address
+    label: Address
+    domain:
+      - schema:Organization
+      - schema:Person
+    defined_by: https://schema.org/address
