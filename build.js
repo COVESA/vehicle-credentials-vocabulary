@@ -10,6 +10,17 @@ export function useHttpsUrls({content}) {
   return content.replaceAll('http://', 'https://');
 }
 
+function addJsonLdAliases({context}) {
+  context.id = '@id';
+  context.type = '@type';
+
+  for(const value of Object.values(context)) {
+    if(value?.['@context']) {
+      addJsonLdAliases({context: value['@context']});
+    }
+  }
+}
+
 export async function loadModel({yamlFilePath}) {
   let yamlObj = {};
 
@@ -72,8 +83,7 @@ export async function writeContext({baseDir, yamlObj}) {
     // generate the JSON-LD Context
     const generatedContext = JSON.parse(useHttpsUrls({
       content: vocab.getContext()}));
-    generatedContext['@context'].id = '@id';
-    generatedContext['@context'].type = '@type';
+    addJsonLdAliases({context: generatedContext['@context']});
     const jsonldContext = JSON.stringify(generatedContext);
     fs.writeFileSync(jsonldContextPath, jsonldContext);
     console.log('Generated JSON-LD Context:', jsonldContextPath);
