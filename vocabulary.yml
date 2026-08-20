@@ -1,9 +1,12 @@
 vocab:
   id: vvc
-  value: https://w3id.org/vvc
+  value: https://w3id.org/vvc#
+prefix:
+  - id: schema
+    value: https://schema.org/
 ontology:
   - property: dc:title
-    value: Verifiable Vehicle Credentials v0.1
+    value: Verifiable Vehicle Credentials v1.0
   - property: dc:description
     value: |-
       <div>
@@ -28,6 +31,15 @@ ontology:
       credentials related to vehicles, whether they are car owners, dealerships,
       or government agencies.
 class:
+  - id: CoverageLimit
+    label: Coverage Limit
+    comment: >-
+      A structured representation of a single insurance coverage type and its
+      monetary limits. A ProofOfInsuranceCredential references one or more
+      CoverageLimit instances — one per required coverage type (e.g. bodily
+      injury, property damage, PIP, uninsured motorist). Each carries a
+      coverageType code and per-person and/or per-accident monetary amounts.
+    context: https://w3id.org/vvc
   - id: FirstSaleInformation
     label: First Sale Information
     comment: >-
@@ -35,6 +47,17 @@ class:
       transfer of ownership of a vehicle. This class encompasses data such as
       the sale date, selling party, and purchasing party, which are vital for
       documenting the vehicle's ownership history.
+    context: https://w3id.org/vvc
+  - id: ProofOfInsuranceCredential
+    label: Proof of Insurance Credential
+    comment: >-
+      A Verifiable Credential serving as legally recognized evidence that a
+      vehicle carries the minimum compulsory third-party liability coverage
+      required by the jurisdiction of operation. Equivalent to the insurance
+      ID card (US), pink slip (Canada), national insurance certificate (EU),
+      and International Motor Insurance Certificate / Green Card (EU
+      cross-border). Extends VehicleInsuranceCredential with structured
+      per-type coverage limits and jurisdiction validity fields.
     context: https://w3id.org/vvc
   - id: VehicleInsuranceCredential
     label: Vehicle Insurance Credential
@@ -112,7 +135,10 @@ class:
 property:
   - id: bodyType
     label: Body Type
-    range: xsd:string
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     comment: >-
       The Body Type property specifies the classification of a vehicle based on
       its physical design characteristics, such as sedan, coupe, SUV, or truck.
@@ -121,6 +147,10 @@ property:
     context: https://w3id.org/vvc
   - id: brand
     label: Brand
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     range: schema:Organization
     comment: >-
       The Brand property identifies the name of the brand associated with the
@@ -130,7 +160,8 @@ property:
     context: https://w3id.org/vvc
   - id: controlNumber
     label: Control Number
-    range: xsd:string
+    domain:
+      - vvc:VehicleTitle
     comment: >-
       The Control Number is a unique identifier assigned to a vehicle or related
       documentation for tracking and management purposes. This property helps in
@@ -139,15 +170,72 @@ property:
     context: https://w3id.org/vvc
   - id: coverageAmount
     label: Coverage Amount
+    domain:
+      - vvc:VehicleInsuranceInformation
     range: schema:MonetaryAmount
     comment: >-
       The Coverage Amount property specifies the maximum sum that an insurance
       policy will pay in the event of a claim. This information is crucial for
       understanding the financial protection offered by the policy.
     context: https://w3id.org/vvc
+  - id: coverageLimitPerAccident
+    label: Coverage Limit Per Accident
+    domain:
+      - vvc:CoverageLimit
+    range: schema:MonetaryAmount
+    comment: >-
+      Maximum amount payable for all claims from a single accident. Applies to
+      bodily injury (aggregate) and property damage. US state BI per-accident
+      minimums range from $30,000 to $100,000; PD from $5,000 to $25,000.
+      Canadian minimum third-party liability is CAD $200,000 in most provinces
+      (CAD $500,000 NS; CAD $50,000 private portion QC). EU directive floor:
+      €6,450,000 BI per accident; €1,300,000 PD per accident.
+    context: https://w3id.org/vvc
+  - id: coverageLimitPerPerson
+    label: Coverage Limit Per Person
+    domain:
+      - vvc:CoverageLimit
+    range: schema:MonetaryAmount
+    comment: >-
+      Maximum amount payable for a single injured person in one accident.
+      Applies primarily to bodily injury liability. Expressed as a
+      schema:MonetaryAmount with schema:value and schema:currency (ISO 4217).
+      US state minimums range from $15,000 (LA, PA) to $50,000 (AK, ME, MI,
+      NC, VA). EU directive floor: €1,300,000 per victim.
+    context: https://w3id.org/vvc
+  - id: coverageLimit
+    label: Coverage Limit
+    domain:
+      - vvc:VehicleInsuranceInformation
+      - vvc:ProofOfInsuranceCredential
+    range: vvc:CoverageLimit
+    comment: >-
+      Links to one or more CoverageLimit instances, each describing a distinct
+      coverage type and its per-person and/or per-accident monetary limits.
+      Use in place of the single-valued vvc:coverageAmount when per-type
+      regulatory breakdowns are required.
+    context: https://w3id.org/vvc
+  - id: coverageType
+    label: Coverage Type
+    domain:
+      - vvc:CoverageLimit
+    comment: >-
+      Code identifying the category of coverage for this CoverageLimit.
+      Allowed values: "bodilyInjury" (BI; required in all US states except
+      NH no-mandate and FL PIP-only; all Canadian provinces; all EU member
+      states), "propertyDamage" (PD; required US/Canada/EU),
+      "personalInjuryProtection" (PIP; mandatory in US no-fault states: DE,
+      FL, HI, KS, KY, MA, MI, MN, NJ, NY, ND, OR, UT), "medicalPayments"
+      (MedPay; required ME, NH, PA), "uninsuredMotorist" (UM; required ~22 US
+      states), "underinsuredMotorist" (UIM), "accidentBenefits" (Canadian
+      SABS; required most provinces), "directCompensationPropertyDamage"
+      (DCPD; required AB, NB, NL, NS, ON, PE, QC), "civilLiability" (EU/CA
+      general BI+PD term).
+    context: https://w3id.org/vvc
   - id: designations
     label: Designations
-    range: xsd:string
+    domain:
+      - vvc:VehicleTitle
     comment: >-
       A collection of official titles or designations related to the vehicle's
       title status. This property may encompass various identifiers that
@@ -157,7 +245,8 @@ property:
     context: https://w3id.org/vvc
   - id: equipmentTrustNumber
     label: Equipment Trust Number
-    range: xsd:string
+    domain:
+      - vvc:VehicleTitle
     comment: >-
       The Equipment Trust Number is a unique identifier associated with the
       financing or leasing trust of a piece of equipment. This property is used
@@ -167,7 +256,9 @@ property:
     context: https://w3id.org/vvc
   - id: fuelType
     label: Fuel Type
-    range: xsd:string
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
     comment: >-
       The Fuel Type property indicates the kind of fuel that a vehicle utilizes
       for operation, such as gasoline, diesel, electric, or hybrid. This
@@ -176,6 +267,8 @@ property:
     context: https://w3id.org/vvc
   - id: insuranceProvider
     label: Insurance Provider
+    domain:
+      - vvc:VehicleInsuranceInformation
     range: schema:Organization
     comment: >-
       The Insurance Provider property identifies the company or organization
@@ -183,17 +276,82 @@ property:
       essential for managing policy details, facilitating claims processing, and
       ensuring compliance with insurance requirements.
     context: https://w3id.org/vvc
+  - id: insuredAddress
+    label: Insured Address
+    domain:
+      - vvc:VehicleInsuranceInformation
+      - vvc:ProofOfInsuranceCredential
+    range: schema:PostalAddress
+    comment: >-
+      The mailing address of the named insured as it appears on the policy.
+      Required on most US insurance ID cards and Canadian pink slips. In the
+      EU Green Card context this appears in Box 7 alongside the policyholder
+      name.
+    context: https://w3id.org/vvc
+  - id: insurerCode
+    label: Insurer Code
+    domain:
+      - vvc:VehicleInsuranceInformation
+      - vvc:ProofOfInsuranceCredential
+    comment: >-
+      The bureau or insurer code identifying the issuing insurance undertaking
+      within the Green Card System (Council of Bureaux). Appears in Box 4 of
+      the International Motor Insurance Certificate; the country prefix must
+      match Box 1 and the insurer name in Box 8. Analogous to naicNumber in
+      the US context.
+    context: https://w3id.org/vvc
+  - id: issuingBureau
+    label: Issuing Bureau
+    domain:
+      - vvc:ProofOfInsuranceCredential
+    range: schema:Organization
+    comment: >-
+      The national Green Card bureau responsible for issuing or countersigning
+      the International Motor Insurance Certificate. Relevant for cross-border
+      travel to non-EEA countries such as Turkey, Ukraine, Moldova,
+      Switzerland, and Andorra, where the physical Green Card is required.
+    context: https://w3id.org/vvc
+  - id: jurisdictionValidity
+    label: Jurisdiction Validity
+    domain:
+      - vvc:VehicleInsuranceInformation
+      - vvc:ProofOfInsuranceCredential
+    comment: >-
+      ISO 3166-1 alpha-2 country code or ISO 3166-2 subdivision code
+      identifying a jurisdiction where this coverage is legally valid (e.g.
+      "US-CA" for California, "CA-ON" for Ontario, "FR" for France). Multiple
+      values indicate multi-jurisdiction coverage. For EU Green Card purposes
+      maps to the countries listed in Box 6; EEA member states are represented
+      as a single grouped block.
+    context: https://w3id.org/vvc
   - id: licensePlateIdentifier
     label: License Plate Identifier
-    range: xsd:string
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     comment: >-
       The License Plate Identifier is a unique alphanumeric code assigned to a
       vehicle's license plate. This property is used to identify the vehicle on
       public roads and in legal documentation, aiding in tracking ownership,
       registration, and compliance with local regulations.
     context: https://w3id.org/vvc
+  - id: licenseTypeCode
+    label: License Type Code
+    domain:
+      - vvc:VehicleRegistration
+    comment: >-
+      A jurisdiction-specific code assigned by a vehicle registration authority
+      to identify the type of license or registration associated with a vehicle
+      or vessel. This is distinct from a vehicle type code, which classifies the
+      vehicle itself.
+    context: https://w3id.org/vvc
   - id: lienholder
     label: Lienholder
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     range:
       - schema:Person
       - schema:Organization
@@ -205,6 +363,10 @@ property:
     context: https://w3id.org/vvc
   - id: lienholderReleaseDate
     label: Lienholder Release Date
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     range: xsd:dateTime
     comment: >-
       The Lienholder Release Date indicates the date on which a lienholder
@@ -214,6 +376,10 @@ property:
     context: https://w3id.org/vvc
   - id: manufacturer
     label: Manufacturer
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     range: schema:Organization
     comment: >-
       The Manufacturer property identifies the organization responsible for
@@ -221,18 +387,62 @@ property:
       of the vehicle, compliance with regulatory standards, and addressing any
       manufacturer recalls or warranties.
     context: https://w3id.org/vvc
+  - id: minimumLegalCoverageConfirmed
+    label: Minimum Legal Coverage Confirmed
+    domain:
+      - vvc:VehicleInsuranceInformation
+      - vvc:ProofOfInsuranceCredential
+    range: xsd:boolean
+    comment: >-
+      Boolean indicating the insurer certifies that the policy meets or exceeds
+      the minimum compulsory insurance required by the jurisdiction(s) in
+      jurisdictionValidity. Corresponds to the "indication of compulsory
+      insurance cover" required on EU certificates under Directive 2009/103/EC
+      Article 16, and the implied attestation on US ID cards and Canadian pink
+      slips.
+    context: https://w3id.org/vvc
   - id: motorcycleEngineNumber
     label: Motorcycle Engine Number
-    range: xsd:string
+    domain:
+      - vvc:VehicleTitle
     comment: >-
       The Motorcycle Engine Number is a unique identifier assigned to the engine
       of a motorcycle. This property is essential for tracking engine
       specifications, verifying identity, and facilitating compliance with
       regulatory requirements regarding vehicle identification.
     context: https://w3id.org/vvc
+  - id: naicNumber
+    label: NAIC Number
+    domain:
+      - vvc:VehicleInsuranceInformation
+      - vvc:ProofOfInsuranceCredential
+    comment: >-
+      The National Association of Insurance Commissioners company code
+      uniquely identifying the insurance carrier. Required on US insurance ID
+      cards. Analogous to the EU Green Card insurer code (see insurerCode).
+    context: https://w3id.org/vvc
+  - id: namedInsured
+    label: Named Insured
+    domain:
+      - vvc:VehicleInsuranceInformation
+      - vvc:ProofOfInsuranceCredential
+    range:
+      - schema:Person
+      - schema:Organization
+    comment: >-
+      The individual or legal entity explicitly named on the policy as the
+      primary insured party. Required on US insurance ID cards, Canadian pink
+      slips, and EU motor insurance certificates. Distinct from vvc:owner
+      (registered owner) and vvc:policyHolder (contracting party) when these
+      differ.
+    context: https://w3id.org/vvc
   - id: numberOfAxles
     label: Number of Axles
-    range: xsd:unsignedInt
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
+    range: xsd:integer
     comment: >-
       The Number of Axles property specifies the total count of axles on a
       vehicle. This information is important for regulatory compliance, vehicle
@@ -241,6 +451,10 @@ property:
     context: https://w3id.org/vvc
   - id: odometerReading
     label: Odometer Reading
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     range: schema:Observation
     comment: >-
       The Odometer Reading represents the total distance traveled by a vehicle
@@ -250,6 +464,10 @@ property:
     context: https://w3id.org/vvc
   - id: owner
     label: Owner
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     range:
       - schema:Person
       - schema:Organization
@@ -261,7 +479,8 @@ property:
     context: https://w3id.org/vvc
   - id: ownerSaleRequirements
     label: Owner Sale Requirements
-    range: xsd:string
+    domain:
+      - vvc:VehicleTitle
     comment: >-
       A detailed description of the conditions and requirements that a vehicle
       owner must fulfill to sell their vehicle. This may include documentation
@@ -271,6 +490,8 @@ property:
     context: https://w3id.org/vvc
   - id: policyEndDate
     label: Policy End Date
+    domain:
+      - vvc:VehicleInsuranceInformation
     range: xsd:dateTime
     comment: >-
       The Policy End Date specifies the date on which the insurance coverage
@@ -279,7 +500,8 @@ property:
     context: https://w3id.org/vvc
   - id: policyNumber
     label: Policy Number
-    range: xsd:string
+    domain:
+      - vvc:VehicleInsuranceInformation
     comment: >-
       The Policy Number property refers to the unique identifier assigned to an
       insurance policy covering a vehicle. This property is essential for
@@ -288,6 +510,8 @@ property:
     context: https://w3id.org/vvc
   - id: policyStartDate
     label: Policy Start Date
+    domain:
+      - vvc:VehicleInsuranceInformation
     range: xsd:dateTime
     comment: >-
       The Policy Start Date indicates the date when the insurance coverage
@@ -296,7 +520,11 @@ property:
     context: https://w3id.org/vvc
   - id: provenanceResource
     label: Provenance Resource
-    range: xsd:string
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
+    range: IRI
     comment: >-
       A reference to the source or origin of information regarding a vehicle's
       history, ownership, and other relevant details. This property may contain
@@ -306,7 +534,21 @@ property:
     context: https://w3id.org/vvc
   - id: purchaseDate
     label: Purchase Date
-    range: xsd:dateTime
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+    range: xsd:date
+    comment: >-
+      The Purchase Date specifies the date on which a vehicle was acquired by
+      the owner. This property is important for tracking ownership history,
+      determining warranty eligibility, and assessing vehicle depreciation over
+      time.
+    context: https://w3id.org/vvc
+  - id: firstSold
+    label: First Sold
+    domain:
+      - vvc:VehicleTitle
+    range: vvc:FirstSaleInformation
     comment: >-
       The Purchase Date specifies the date on which a vehicle was acquired by
       the owner. This property is important for tracking ownership history,
@@ -315,6 +557,8 @@ property:
     context: https://w3id.org/vvc
   - id: registeringOrganization
     label: Registering Organization
+    domain:
+      - vvc:VehicleRegistration
     range: schema:Organization
     comment: >-
       The Registering Organization property identifies the company or
@@ -322,8 +566,19 @@ property:
       property is essential for verifying the legitimacy of the registration and
       for facilitating communication regarding registration matters.
     context: https://w3id.org/vvc
+  - id: registrationIssueDate
+    label: Registration Issue Date
+    domain:
+      - vvc:VehicleRegistration
+    range: xsd:dateTime
+    comment: >-
+      The Registration Issue Date indicates the date on which the vehicle
+      registration was processed.
+    context: https://w3id.org/vvc
   - id: registrationExpirationDate
     label: Registration Expiration Date
+    domain:
+      - vvc:VehicleRegistration
     range: xsd:dateTime
     comment: >-
       The Registration Expiration Date indicates the date on which the vehicle
@@ -333,6 +588,8 @@ property:
     context: https://w3id.org/vvc
   - id: registrationStartDate
     label: Registration Start Date
+    domain:
+      - vvc:VehicleRegistration
     range: xsd:dateTime
     comment: >-
       The Registration Start Date indicates when the vehicle's registration
@@ -341,6 +598,8 @@ property:
     context: https://w3id.org/vvc
   - id: titleIssueDate
     label: Title Issue Date
+    domain:
+      - vvc:VehicleTitle
     range: xsd:dateTime
     comment: >-
       The date and time when the vehicle title was officially issued by the
@@ -350,7 +609,10 @@ property:
     context: https://w3id.org/vvc
   - id: vehicleIdentificationNumber
     label: Vehicle Identification Number
-    range: xsd:string
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     comment: >-
       A unique identifier assigned to a vehicle, commonly known as the Vehicle
       Identification Number (VIN). This number is used to track the vehicle's
@@ -360,7 +622,11 @@ property:
     context: https://w3id.org/vvc
   - id: vehicleModelDate
     label: Vehicle Model Date
-    range: xsd:dateTime
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
+    range: xsd:date
     comment: >-
       The Vehicle Model Date specifies the date associated with the specific
       model of a vehicle, indicating when the model was introduced or last
@@ -370,6 +636,10 @@ property:
     context: https://w3id.org/vvc
   - id: weight
     label: Weight
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     range: schema:QuantitativeValue
     comment: >-
       The Weight property indicates the mass of a vehicle, typically measured in
@@ -377,51 +647,188 @@ property:
       transportation regulations, assessing performance metrics, and determining
       towing capacities.
     context: https://w3id.org/vvc
+  - id: feeBasisYear
+    label: Fee Basis Year
+    domain:
+      - vvc:VehicleRegistration
+    range: xsd:gYear
+    comment: >-
+      The year used with the VLF class to determine the Vehicle License Fee and
+      its depreciation schedule. It is usually assigned when ownership changes,
+      a nonresident purchases the vehicle, or an alteration places the vehicle
+      in a different VLF class.
+    context: https://w3id.org/vvc
   - id: feesPaid
     label: Fees Paid
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
     comment: >-
       The feesPaid property denotes the fees paid as part of the transaction,
       registration, insurance, or other event represented by a credential.
     context: https://w3id.org/vvc
   - id: isInsured
     label: Is Insured
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
     comment: >-
       The isInsured property indicates whether the vehicle in question is covered
       under an insurance policy.
     context: https://w3id.org/vvc
   - id: motivePower
     label: Motive Power
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
     comment: >-
       The motivePower property allows expression of a vehicle's propulsion
       mechanism.
     context: https://w3id.org/vvc
   - id: numberOfCylinders
     label: Number of Cylinders
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     comment: >-
       The numberOfCylinders property denotes the number of cylinders in a
       vehicle's engine, if applicable.
     context: https://w3id.org/vvc
   - id: policyHolder
     label: Policy Holder
+    domain:
+      - vvc:VehicleInsuranceInformation
     comment: >-
       The Policy Holder is the person or organization that holds the policy in
       question.
     context: https://w3id.org/vvc
-  - id: vehicleType
-    label: Vehicle Type
+  - id: vehicleTypeCode
+    label: Vehicle Type Code
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     comment: >-
-      The vehicleType property allows general expression of a vehicle's type
+      The vehicleTypeCode property allows general expression of a vehicle's type
       classification.
     context: https://w3id.org/vvc
   - id: vesselType
     label: Vessel Type
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     comment: >-
       The vesselType property allows expression of a watercraft's type
       classification.
     context: https://w3id.org/vvc
+  - id: vlfClass
+    label: VLF Class
+    domain:
+      - vvc:VehicleRegistration
+    comment: >-
+      A code identifying the vehicle value range used to determine a Vehicle
+      License Fee (VLF).
+    context: https://w3id.org/vvc
   - id: weightClass
     label: Weight Class
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     comment: >-
       The weightClass property allows general expression of a vehicle's weight
       classification.
     context: https://w3id.org/vvc
+  - id: schema:model
+    label: Model
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
+    defined_by: https://schema.org/model
+  - id: schema:name
+    label: Name
+    domain:
+      - schema:Person
+      - schema:Organization
+    defined_by: https://schema.org/name
+  - id: schema:value
+    label: Value
+    domain:
+      - schema:QuantitativeValue
+      - schema:Observation
+      - schema:MonetaryAmount
+    defined_by: https://schema.org/value
+  - id: schema:unitCode
+    label: Unit Code
+    domain:
+      - schema:Observation
+      - schema:QuantitativeValue
+    defined_by: https://schema.org/unitCode
+  - id: schema:currency
+    label: Currency
+    domain:
+      - schema:MonetaryAmount
+    defined_by: https://schema.org/currency
+  - id: schema:certificationIdentification
+    label: Certification Identification
+    domain:
+      - schema:Certification
+    defined_by: https://schema.org/certificationIdentification
+  - id: schema:about
+    label: About
+    domain:
+      - schema:Certification
+    defined_by: https://schema.org/about
+  - id: schema:streetAddress
+    label: Street Address
+    domain:
+      - schema:PostalAddress
+    defined_by: https://schema.org/streetAddress
+  - id: schema:addressRegion
+    label: Address Region
+    domain:
+      - schema:PostalAddress
+    defined_by: https://schema.org/addressRegion
+  - id: schema:addressLocality
+    label: Address Locality
+    domain:
+      - schema:PostalAddress
+    defined_by: https://schema.org/addressLocality
+  - id: schema:postalCode
+    label: Postal Code
+    domain:
+      - schema:PostalAddress
+    defined_by: https://schema.org/postalCode
+  - id: schema:variableMeasured
+    label: Variable Measured
+    domain:
+      - schema:Observation
+    defined_by: https://schema.org/variableMeasured
+  - id: schema:description
+    label: Description
+    domain:
+      - schema:Observation
+      - schema:Person
+      - schema:Organization
+    defined_by: https://schema.org/description
+  - id: schema:observationDate
+    label: Observation Date
+    domain:
+      - schema:Observation
+    range: xsd:dateTime
+    defined_by: https://schema.org/observationDate
+  - id: schema:hasCertification
+    label: Has Certification
+    domain:
+      - schema:Organization
+      - schema:Person
+    defined_by: https://schema.org/hasCertification
+  - id: schema:address
+    label: Address
+    domain:
+      - schema:Organization
+      - schema:Person
+    defined_by: https://schema.org/address
