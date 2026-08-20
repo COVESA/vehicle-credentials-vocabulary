@@ -135,6 +135,10 @@ class:
 property:
   - id: bodyType
     label: Body Type
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     comment: >-
       The Body Type property specifies the classification of a vehicle based on
       its physical design characteristics, such as sedan, coupe, SUV, or truck.
@@ -143,6 +147,10 @@ property:
     context: https://w3id.org/vvc
   - id: brand
     label: Brand
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     range: schema:Organization
     comment: >-
       The Brand property identifies the name of the brand associated with the
@@ -152,6 +160,8 @@ property:
     context: https://w3id.org/vvc
   - id: controlNumber
     label: Control Number
+    domain:
+      - vvc:VehicleTitle
     comment: >-
       The Control Number is a unique identifier assigned to a vehicle or related
       documentation for tracking and management purposes. This property helps in
@@ -160,6 +170,8 @@ property:
     context: https://w3id.org/vvc
   - id: coverageAmount
     label: Coverage Amount
+    domain:
+      - vvc:VehicleInsuranceInformation
     range: schema:MonetaryAmount
     comment: >-
       The Coverage Amount property specifies the maximum sum that an insurance
@@ -222,6 +234,8 @@ property:
     context: https://w3id.org/vvc
   - id: designations
     label: Designations
+    domain:
+      - vvc:VehicleTitle
     comment: >-
       A collection of official titles or designations related to the vehicle's
       title status. This property may encompass various identifiers that
@@ -231,6 +245,8 @@ property:
     context: https://w3id.org/vvc
   - id: equipmentTrustNumber
     label: Equipment Trust Number
+    domain:
+      - vvc:VehicleTitle
     comment: >-
       The Equipment Trust Number is a unique identifier associated with the
       financing or leasing trust of a piece of equipment. This property is used
@@ -240,6 +256,9 @@ property:
     context: https://w3id.org/vvc
   - id: fuelType
     label: Fuel Type
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
     comment: >-
       The Fuel Type property indicates the kind of fuel that a vehicle utilizes
       for operation, such as gasoline, diesel, electric, or hybrid. This
@@ -248,6 +267,8 @@ property:
     context: https://w3id.org/vvc
   - id: insuranceProvider
     label: Insurance Provider
+    domain:
+      - vvc:VehicleInsuranceInformation
     range: schema:Organization
     comment: >-
       The Insurance Provider property identifies the company or organization
@@ -305,6 +326,10 @@ property:
     context: https://w3id.org/vvc
   - id: licensePlateIdentifier
     label: License Plate Identifier
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     comment: >-
       The License Plate Identifier is a unique alphanumeric code assigned to a
       vehicle's license plate. This property is used to identify the vehicle on
@@ -313,6 +338,8 @@ property:
     context: https://w3id.org/vvc
   - id: licenseTypeCode
     label: License Type Code
+    domain:
+      - vvc:VehicleRegistration
     comment: >-
       A jurisdiction-specific code assigned by a vehicle registration authority
       to identify the type of license or registration associated with a vehicle
@@ -321,6 +348,10 @@ property:
     context: https://w3id.org/vvc
   - id: lienholder
     label: Lienholder
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     range:
       - schema:Person
       - schema:Organization
@@ -332,6 +363,10 @@ property:
     context: https://w3id.org/vvc
   - id: lienholderReleaseDate
     label: Lienholder Release Date
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     range: xsd:dateTime
     comment: >-
       The Lienholder Release Date indicates the date on which a lienholder
@@ -341,6 +376,10 @@ property:
     context: https://w3id.org/vvc
   - id: manufacturer
     label: Manufacturer
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     range: schema:Organization
     comment: >-
       The Manufacturer property identifies the organization responsible for
@@ -364,6 +403,8 @@ property:
     context: https://w3id.org/vvc
   - id: motorcycleEngineNumber
     label: Motorcycle Engine Number
+    domain:
+      - vvc:VehicleTitle
     comment: >-
       The Motorcycle Engine Number is a unique identifier assigned to the engine
       of a motorcycle. This property is essential for tracking engine
@@ -397,6 +438,10 @@ property:
     context: https://w3id.org/vvc
   - id: numberOfAxles
     label: Number of Axles
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     range: xsd:integer
     comment: >-
       The Number of Axles property specifies the total count of axles on a
@@ -406,6 +451,10 @@ property:
     context: https://w3id.org/vvc
   - id: odometerReading
     label: Odometer Reading
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     range: schema:Observation
     comment: >-
       The Odometer Reading represents the total distance traveled by a vehicle
@@ -415,6 +464,10 @@ property:
     context: https://w3id.org/vvc
   - id: owner
     label: Owner
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     range:
       - schema:Person
       - schema:Organization
@@ -426,6 +479,8 @@ property:
     context: https://w3id.org/vvc
   - id: ownerSaleRequirements
     label: Owner Sale Requirements
+    domain:
+      - vvc:VehicleTitle
     comment: >-
       A detailed description of the conditions and requirements that a vehicle
       owner must fulfill to sell their vehicle. This may include documentation
@@ -435,6 +490,8 @@ property:
     context: https://w3id.org/vvc
   - id: policyEndDate
     label: Policy End Date
+    domain:
+      - vvc:VehicleInsuranceInformation
     range: xsd:dateTime
     comment: >-
       The Policy End Date specifies the date on which the insurance coverage
@@ -443,6 +500,8 @@ property:
     context: https://w3id.org/vvc
   - id: policyNumber
     label: Policy Number
+    domain:
+      - vvc:VehicleInsuranceInformation
     comment: >-
       The Policy Number property refers to the unique identifier assigned to an
       insurance policy covering a vehicle. This property is essential for
@@ -451,6 +510,8 @@ property:
     context: https://w3id.org/vvc
   - id: policyStartDate
     label: Policy Start Date
+    domain:
+      - vvc:VehicleInsuranceInformation
     range: xsd:dateTime
     comment: >-
       The Policy Start Date indicates the date when the insurance coverage
@@ -459,6 +520,11 @@ property:
     context: https://w3id.org/vvc
   - id: provenanceResource
     label: Provenance Resource
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
+    range: IRI
     comment: >-
       A reference to the source or origin of information regarding a vehicle's
       history, ownership, and other relevant details. This property may contain
@@ -468,6 +534,9 @@ property:
     context: https://w3id.org/vvc
   - id: purchaseDate
     label: Purchase Date
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
     range: xsd:date
     comment: >-
       The Purchase Date specifies the date on which a vehicle was acquired by
@@ -477,6 +546,8 @@ property:
     context: https://w3id.org/vvc
   - id: firstSold
     label: First Sold
+    domain:
+      - vvc:VehicleTitle
     range: vvc:FirstSaleInformation
     comment: >-
       The Purchase Date specifies the date on which a vehicle was acquired by
@@ -486,6 +557,8 @@ property:
     context: https://w3id.org/vvc
   - id: registeringOrganization
     label: Registering Organization
+    domain:
+      - vvc:VehicleRegistration
     range: schema:Organization
     comment: >-
       The Registering Organization property identifies the company or
@@ -495,6 +568,8 @@ property:
     context: https://w3id.org/vvc
   - id: registrationIssueDate
     label: Registration Issue Date
+    domain:
+      - vvc:VehicleRegistration
     range: xsd:dateTime
     comment: >-
       The Registration Issue Date indicates the date on which the vehicle
@@ -502,6 +577,8 @@ property:
     context: https://w3id.org/vvc
   - id: registrationExpirationDate
     label: Registration Expiration Date
+    domain:
+      - vvc:VehicleRegistration
     range: xsd:dateTime
     comment: >-
       The Registration Expiration Date indicates the date on which the vehicle
@@ -511,6 +588,8 @@ property:
     context: https://w3id.org/vvc
   - id: registrationStartDate
     label: Registration Start Date
+    domain:
+      - vvc:VehicleRegistration
     range: xsd:dateTime
     comment: >-
       The Registration Start Date indicates when the vehicle's registration
@@ -519,6 +598,8 @@ property:
     context: https://w3id.org/vvc
   - id: titleIssueDate
     label: Title Issue Date
+    domain:
+      - vvc:VehicleTitle
     range: xsd:dateTime
     comment: >-
       The date and time when the vehicle title was officially issued by the
@@ -528,6 +609,10 @@ property:
     context: https://w3id.org/vvc
   - id: vehicleIdentificationNumber
     label: Vehicle Identification Number
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     comment: >-
       A unique identifier assigned to a vehicle, commonly known as the Vehicle
       Identification Number (VIN). This number is used to track the vehicle's
@@ -537,6 +622,10 @@ property:
     context: https://w3id.org/vvc
   - id: vehicleModelDate
     label: Vehicle Model Date
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     range: xsd:date
     comment: >-
       The Vehicle Model Date specifies the date associated with the specific
@@ -547,6 +636,10 @@ property:
     context: https://w3id.org/vvc
   - id: weight
     label: Weight
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     range: schema:QuantitativeValue
     comment: >-
       The Weight property indicates the mass of a vehicle, typically measured in
@@ -556,6 +649,8 @@ property:
     context: https://w3id.org/vvc
   - id: feeBasisYear
     label: Fee Basis Year
+    domain:
+      - vvc:VehicleRegistration
     range: xsd:gYear
     comment: >-
       The year used with the VLF class to determine the Vehicle License Fee and
@@ -565,58 +660,94 @@ property:
     context: https://w3id.org/vvc
   - id: feesPaid
     label: Fees Paid
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
     comment: >-
       The feesPaid property denotes the fees paid as part of the transaction,
       registration, insurance, or other event represented by a credential.
     context: https://w3id.org/vvc
   - id: isInsured
     label: Is Insured
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
     comment: >-
       The isInsured property indicates whether the vehicle in question is covered
       under an insurance policy.
     context: https://w3id.org/vvc
   - id: motivePower
     label: Motive Power
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
     comment: >-
       The motivePower property allows expression of a vehicle's propulsion
       mechanism.
     context: https://w3id.org/vvc
   - id: numberOfCylinders
     label: Number of Cylinders
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     comment: >-
       The numberOfCylinders property denotes the number of cylinders in a
       vehicle's engine, if applicable.
     context: https://w3id.org/vvc
   - id: policyHolder
     label: Policy Holder
+    domain:
+      - vvc:VehicleInsuranceInformation
     comment: >-
       The Policy Holder is the person or organization that holds the policy in
       question.
     context: https://w3id.org/vvc
   - id: vehicleTypeCode
     label: Vehicle Type Code
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     comment: >-
       The vehicleTypeCode property allows general expression of a vehicle's type
       classification.
     context: https://w3id.org/vvc
   - id: vesselType
     label: Vessel Type
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     comment: >-
       The vesselType property allows expression of a watercraft's type
       classification.
     context: https://w3id.org/vvc
   - id: vlfClass
     label: VLF Class
+    domain:
+      - vvc:VehicleRegistration
     comment: >-
       A code identifying the vehicle value range used to determine a Vehicle
       License Fee (VLF).
     context: https://w3id.org/vvc
   - id: weightClass
     label: Weight Class
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
     comment: >-
       The weightClass property allows general expression of a vehicle's weight
       classification.
     context: https://w3id.org/vvc
+  - id: schema:model
+    label: Model
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
+    defined_by: https://schema.org/model
   - id: schema:name
     label: Name
     domain:
