@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "clean": "rm dist/*",
-    "build": "node build.js && npm run move",
+    "build": "node index.js && npm run move",
     "move": "mv vocabulary.html dist/index.html && mv vocabulary.context.jsonld vocabulary.jsonld vocabulary.ttl dist/",
     "release": "bash -c 'VERSION=$0; npm run build && cp dist/vocabulary.context.jsonld \"dist/contexts/$VERSION.jsonld\" && git add -f \"dist/contexts/$VERSION.jsonld\" && echo \"Release context staged at dist/contexts/$VERSION.jsonld; review and commit it to finish the release.\"'",
     "serve": "http-server dist/"
@@ -20,8 +20,7 @@
   ],
   "license": "MPL-2.0",
   "devDependencies": {
-    "http-server": "^14.1.1",
-    "js-yaml": "^4.1.0",
-    "yml2vocab": "^1.6.2"
+    "@digitalbazaar/vocabulary-to-context": "^1.0.0",
+    "http-server": "^14.1.1"
   }
 }
