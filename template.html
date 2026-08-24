@@ -198,10 +198,10 @@
     </style>
   </head>
   <body typeof="owl:Ontology" resource="https://w3id.org/vvc"
-    prefix="vvc: https://w3id.org/vvc dc: http://purl.org/dc/terms/ owl: http://www.w3.org/2002/07/owl# rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns# rdfs: http://www.w3.org/2000/01/rdf-schema# xsd: http://www.w3.org/2001/XMLSchema# vs: http://www.w3.org/2003/06/sw-vocab-status/ns# schema: http://schema.org/ jsonld: http://www.w3.org/ns/json-ld#">
+    prefix="vvc: https://w3id.org/vvc dc: http://purl.org/dc/terms/ owl: http://www.w3.org/2002/07/owl# rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns# rdfs: http://www.w3.org/2000/01/rdf-schema# xsd: http://www.w3.org/2001/XMLSchema# vs: http://www.w3.org/2003/06/sw-vocab-status/ns# schema: https://schema.org/ jsonld: http://www.w3.org/ns/json-ld#">
     <section id="abstract">
       <p>
-{{ABSTRACT}}
+        The Vehicle Credentials Vocabulary is designed to help organize and share information about vehicles and their ownership. It includes terms and definitions that describe different aspects of vehicles, such as their specifications, registration details, insurance information, and ownership information. This vocabulary is useful for anyone involved with digital credentials related to vehicles, whether they are car owners, dealerships, or government agencies.
       </p>
       <p>Alternate versions of the vocabulary definition exist in
         <a rel="alternate" href="vocabulary.ttl">Turtle</a> and
@@ -210,19 +210,20 @@
     </section>
     <section id="sotd">
       <p>
-This is an experimental vocabulary. Its contents and associated files such as contexts are subject to change.
+        This is an experimental vocabulary. Its contents and associated files such as contexts are subject to change.
       </p>
     </section>
 
     <section>
       <h1>Introduction</h1>
-
-{{INTRODUCTION}}
-
-    <section>
-{{EXAMPLES}}
-
-    </section>
+      <div>
+          <h2>Introduction to the Verifiable Vehicle Credentials Vocabulary</h2>
+          <p>The Verifiable Vehicle Credentials Vocabulary provides a clear way to describe important information about vehicles and their ownership. This vocabulary simplifies communication about vehicles by ensuring everyone uses the same terms and definitions. By having a common language, misunderstandings can be reduced when sharing information about vehicles.</p>
+          <p>This vocabulary is beneficial for many reasons. It allows for consistent data sharing between different parties involved in the vehicle industry. Whether it's a car manufacturer, dealership, insurance company, or government agency, everyone can have a shared understanding. This improves efficiency and helps to streamline processes, making it easier to handle vehicle credentials quickly and accurately.</p>
+          <p>Various market verticals can benefit from using the Vehicle Credentials Vocabulary. Automotive manufacturers can standardize their vehicle specifications, while dealerships can provide better information to potential buyers. Insurance companies can use the vocabulary to assess risk and evaluate policies based on clear vehicle data. Additionally, government agencies can improve their record-keeping and make vehicle information more accessible to the public.</p>
+          <p>Use cases for the vocabulary include vehicle registration, tracking ownership changes, and sharing technical specifications between manufacturers and dealerships. It is also valuable in managing insurance claims and assessing vehicle values. The vocabulary meets the requirements of being comprehensive and adaptable, which means it can evolve along with changes in the vehicle industry.</p>
+          <p>In summary, the Vehicle Credentials Vocabulary is a powerful tool that brings clarity and consistency to the vehicle industry. By facilitating better communication and data sharing, this vocabulary can help a wide range of businesses and organizations work more effectively together. It sets the stage for improved operations and better customer experiences throughout the vehicle lifecycle.</p>
+      </div>
 
       <section id="conformance"></section>
       <section>
@@ -237,6 +238,273 @@ This is an experimental vocabulary. Its contents and associated files such as co
         <p>The following <code>@context</code> files make use of the terms defined in this specification:</p>
         <ul id="contexts">
         </ul>
+      </section>
+
+      <section>
+        <h3>Examples</h3>
+        <p>
+          In this section we give examples of the types of credentials that can be expressed with the Verifiable Vehicle
+          Credentials vocabulary.
+        </p>
+
+        <section>
+          <h3>Vehicle Title Example</h3>
+
+          <p>
+          <pre class="example nohighlight" title="A Verifiable Credential representing a vehicle title">
+    {
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://w3id.org/vvc/v1rc2"
+      ],
+      "type": [
+        "VerifiableCredential",
+        "VehicleTitleCredential"
+      ],
+      "issuer": "did:web:dmv.utopia.example",
+      "credentialStatus": {
+        "id": "https://example.gov/utopiadmv/credentials/status/3#94567",
+        "type": "BitstringStatusListEntry",
+        "statusPurpose": "revocation",
+        "statusListIndex": "94567",
+        "statusListCredential": "https://example.gov/utopiadmv/credentials/status/3"
+      },
+      "credentialSubject": {
+        "type": "VehicleTitle",
+        "vehicleIdentificationNumber": "4Y1SL65848Z411439",
+        "manufacturer": {
+          "type": "Organization",
+          "name": "Honda"
+        },
+        "bodyType": "4H",
+        "numberOfAxles": 2,
+        "weight": {
+          "type": "QuantitativeValue",
+          "value": "3000",
+          "unitCode": "LBR"
+        },
+        "vehicleModelDate": "1990",
+        "fuelType": "G",
+        "purchaseDate": "2020-02-01",
+        "firstSold": {
+          "type": "FirstSaleInformation",
+          "class": "AA",
+          "year": "2020",
+          "month": "BB"
+        },
+        "odometerReading": {
+          "type": "Observation",
+          "observationDate": "2020-02-01",
+          "variableMeasured": "Odometer Mileage",
+          "value": "100000",
+          <span class="comment">// The unitCode value below is a UN/CEFACT Common Code.</span>
+          "unitCode": "1M",
+          "description": "ODOMETER IS NOT THE ACTUAL MILEAGE"
+        },
+        "owner": [
+          {
+            "type": "Person",
+            "name": "USEDCAR COLLECTOR",
+            "address": {
+              "type": "PostalAddress",
+              "streetAddress": "123 LEMON AVE",
+              "addressLocality": "UTOPOLIS",
+              "addressRegion": "UTOPIA",
+              "postalCode": "12345"
+            },
+            "hasCertification": {
+              "type": "Certification",
+              "about": "Driver's License Number",
+              "certificationIdentification": "542426814"
+            },
+            "description": "Primary Owner"
+          },
+          {
+            "type": "Person",
+            "name": "USEDCAR ENTHUSIAST",
+            "hasCertification": {
+              "type": "Certification",
+              "about": "Driver's License Number",
+              "certificationIdentification": "789245168"
+            } 
+          }
+        ],
+        "ownerSaleRequirements": "USEDCAR COLLECTOR AND USEDCAR ENTHUSIAST",
+        "feesPaid": {
+          "type": "MonetaryAmount",
+          "currency": "USD",
+          "value": "100"
+        },
+        "validFrom": "2024-02-01",
+        "titleIssueDate": "2024-02-01",
+        "licensePlateIdentifier": "ABC1234",
+        "equipmentTrustNumber": "12345678",
+        "lienholder": [
+          {
+            "type": "Organization",
+            "name": "USEDCAR LIENHOLDER",
+            "address": {
+              "type": "PostalAddress",
+              "streetAddress": "456 LEMON AVE",
+              "addressLocality": "UTOPOLIS",
+              "addressRegion": "UTOPIA",
+              "postalCode": "12345"
+            }
+          }
+        ],
+        "lienholderReleaseDate": "2020-01-01",
+        "controlNumber": "12345678",
+        "description": "OFF HIGHWAY",
+        "designations": "Original Taxi"
+      },
+      "proof": {
+        "type": "DataIntegrity",
+        "cryptosuite": "ecdsa-rdfc-2019",
+        "verificationMethod": "did:web:dmv.utopia.example#key-1",
+        "proofPurpose": "assertionMethod",
+        "proofValue": "z4peo48uwK2EF4Fta8P...HzQMDYJ34r9gL"
+      }
+    }
+            </pre>
+          </p>
+        </section>
+        <section>
+          <h3>Vehicle Registration Example</h3>
+
+          <p>
+          <pre class="example nohighlight" title="A Verifiable Credential representing a vehicle registration">
+    {
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://w3id.org/vvc/v1rc2"
+      ],
+      "type": [
+        "VerifiableCredential",
+        "VehicleRegistrationCredential"
+      ],
+      "issuer": "did:web:dmv.utopia.example",
+      "credentialStatus": {
+        "id": "https://example.gov/utopiadmv/credentials/status/3#94567",
+        "type": "BitstringStatusListEntry",
+        "statusPurpose": "revocation",
+        "statusListIndex": "94567",
+        "statusListCredential": "https://example.gov/utopiadmv/credentials/status/3"
+      },
+      "credentialSubject": {
+        "type": "VehicleRegistration",
+        "vehicleIdentificationNumber": "4Y1SL65848Z411439",
+        "manufacturer": {
+          "type": "Organization",
+          "name": "Honda"
+        },
+        "weight": {
+          "type": "QuantitativeValue",
+          "value": "3000",
+          "unitCode": "LBR"
+        },
+        "vehicleModelDate": "1990",
+        "fuelType": "G",
+        "owner": [
+          {
+            "type": "Person",
+            "name": "USEDCAR COLLECTOR",
+            "address": {
+              "type": "PostalAddress",
+              "streetAddress": "123 LEMON AVE",
+              "addressLocality": "UTOPOLIS",
+              "addressRegion": "UTOPIA",
+              "postalCode": "12345"
+            },
+            "hasCertification": {
+              "type": "Certification",
+              "about": "Driver's License Number",
+              "certificationIdentification": "542426814"
+            }
+          }
+        ],
+        "registrationIssueDate": "2024-01-31",
+        "registrationStartDate": "2024-02-01",
+        "registrationExpirationDate": "2025-02-01",
+        "licensePlateIdentifier": "ABC1234",
+        "licenseTypeCode": "11",
+        "vlfClass": "FT",
+        "feeBasisYear": "2024",
+        "vehicleTypeCode": "15"
+      },
+      "proof": {
+        "type": "DataIntegrity",
+        "cryptosuite": "ecdsa-rdfc-2019",
+        "verificationMethod": "did:web:dmv.utopia.example#key-1",
+        "proofPurpose": "assertionMethod",
+        "proofValue": "z4peo48uwK2EF4Fta8P...HzQMDYJ34r5pd"
+      }
+    }
+            </pre>
+          </p>
+        </section>
+        <section>
+          <h3>Vehicle Insurance Example</h3>
+
+          <p>
+          <pre class="example nohighlight" title="A Verifiable Credential representing vehicle insurance">
+    {
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://w3id.org/vvc/v1rc2"
+      ],
+      "type": [
+        "VerifiableCredential",
+        "VehicleInsuranceCredential"
+      ],
+      "issuer": "did:web:dmv.utopia.example",
+      "credentialStatus": {
+        "id": "https://example.gov/utopiadmv/credentials/status/3#94567",
+        "type": "BitstringStatusListEntry",
+        "statusPurpose": "revocation",
+        "statusListIndex": "94567",
+        "statusListCredential": "https://example.gov/utopiadmv/credentials/status/3"
+      },
+      "credentialSubject": {
+        "type": "VehicleInsuranceInformation",
+        "vehicleIdentificationNumber": "4Y1SL65848Z411439",
+        "manufacturer": {
+          "type": "Organization",
+          "name": "Honda"
+        },
+        "owner": [
+          {
+            "type": "Person",
+            "name": "USEDCAR COLLECTOR",
+            "address": {
+              "type": "PostalAddress",
+              "streetAddress": "123 LEMON AVE",
+              "addressLocality": "UTOPOLIS",
+              "addressRegion": "UTOPIA",
+              "postalCode": "12345"
+            }
+          }
+        ],
+        "policyNumber": "CI12345000",
+        "policyStartDate": "2025-01-01",
+        "policyEndDate": "2026-01-01",
+        "coverageAmount": {
+          "type": "MonetaryAmount",
+          "currency": "USD",
+          "value": "1000000"
+        },
+        "licensePlateIdentifier": "ABC1234"
+      },
+      "proof": {
+        "type": "DataIntegrity",
+        "cryptosuite": "ecdsa-rdfc-2019",
+        "verificationMethod": "did:web:dmv.utopia.example#key-1",
+        "proofPurpose": "assertionMethod",
+        "proofValue": "z4peo48uwK2EF4Fta8P...HzQMDYJ34rm80"
+      }
+    }
+            </pre>
+          </p>
+        </section>
       </section>
 
     </section>
