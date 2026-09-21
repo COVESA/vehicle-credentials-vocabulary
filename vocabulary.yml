@@ -374,6 +374,22 @@ property:
       for documenting the resolution of a lien and allowing for the clear
       transfer of ownership without encumbrances.
     context: https://w3id.org/vvc
+  - id: makeCode
+    label: Make Code
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
+    comment: >-
+      The code a registration authority holds for the vehicle's make, as
+      distinct from the make's trade name. In North America this is the
+      four-character NCIC make code published by the FBI and administered for
+      jurisdictions by AAMVA; it is the make value exchanged between vehicle
+      registries and law enforcement, and it is the make field of record on a
+      Canadian registration. A credential that carries only a trade name cannot
+      be matched against a registry record without a lookup that the issuer has
+      already performed.
+    context: https://w3id.org/vvc
   - id: manufacturer
     label: Manufacturer
     domain:
