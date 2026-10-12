@@ -596,6 +596,24 @@ property:
       became effective. This property is important for tracking the registration
       timeline and ensuring compliance with regulatory requirements.
     context: https://w3id.org/vvc
+  - id: titleNumber
+    label: Title Number
+    domain:
+      - vvc:VehicleTitle
+    comment: >-
+      The identifier used by the issuing jurisdiction to reference a vehicle's
+      title. Its format is determined by that jurisdiction and may be derived
+      from the title issue date.
+    context: https://w3id.org/vvc
+  - id: titleJurisdiction
+    label: Title Jurisdiction
+    domain:
+      - vvc:VehicleTitle
+    comment: >-
+      The jurisdiction that issued the vehicle's title. This property provides
+      the jurisdictional context for interpreting titleNumber and verifying the
+      title record.
+    context: https://w3id.org/vvc
   - id: titleIssueDate
     label: Title Issue Date
     domain:
