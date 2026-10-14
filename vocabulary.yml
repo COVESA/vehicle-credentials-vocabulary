@@ -232,8 +232,8 @@ property:
       (DCPD; required AB, NB, NL, NS, ON, PE, QC), "civilLiability" (EU/CA
       general BI+PD term).
     context: https://w3id.org/vvc
-  - id: titleBranding
-    label: Title Branding
+  - id: branding
+    label: Branding
     domain:
       - vvc:VehicleTitle
     comment: >-
