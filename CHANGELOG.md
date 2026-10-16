@@ -5,6 +5,9 @@ Field changes in each published JSON-LD context, compared with the previous rele
 ## [v1rc5](https://w3id.org/vvc/v1rc5) - Unreleased
 
 ### Added
+- `VehicleTitle`, `VehicleRegistration`, and `VehicleInsuranceInformation`:
+  - `make`
+  - `makeCode`
 - `VehicleTitle`:
   - `jurisdiction`
   - `titleNumber`
