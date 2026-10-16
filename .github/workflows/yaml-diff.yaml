@@ -1,8 +1,8 @@
 name: YAML Diff on PR
 
 permissions:
-      contents: read
-      pull-requests: write
+  contents: read
+  pull-requests: write
 
 on:
   pull_request:
