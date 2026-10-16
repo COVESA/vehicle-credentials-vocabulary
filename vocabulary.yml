@@ -373,6 +373,15 @@ property:
       for documenting the resolution of a lien and allowing for the clear
       transfer of ownership without encumbrances.
     context: https://w3id.org/vvc
+  - id: make
+    label: Make
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
+    comment: >-
+      A name that a manufacturer applies to a group of vehicles or engines.
+    context: https://w3id.org/vvc
   - id: makeCode
     label: Make Code
     domain:
