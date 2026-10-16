@@ -604,8 +604,8 @@ property:
       title. Its format is determined by that jurisdiction and may be derived
       from the title issue date.
     context: https://w3id.org/vvc
-  - id: titleJurisdiction
-    label: Title Jurisdiction
+  - id: jurisdiction
+    label: Jurisdiction
     domain:
       - vvc:VehicleTitle
     comment: >-
