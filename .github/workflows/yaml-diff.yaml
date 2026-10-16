@@ -16,24 +16,18 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          # Full history so both the base and head commits are available.
+          # Head branches of PRs from forks do not exist in this repo, so
+          # files are read by commit SHA rather than by branch name.
           fetch-depth: 0
-          submodules: false
-          # Do persist credentials, as we need it for the git checkout later
-          persist-credentials: true
-      - name: Checkout base branch
+          persist-credentials: false
+      - name: Save base and head vocabulary.yml
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          git checkout $GITHUB_BASE_REF
-          git submodule update --recursive
-      - name: "Save base vocabulary.yml"
-        run: |
-          cp vocabulary.yml /tmp/base_vocabulary.yml
-      - name: Checkout head branch
-        run: |
-          git checkout $GITHUB_HEAD_REF
-          git submodule update --recursive
-      - name: Save head vocabulary.yml
-        run: |
-          cp vocabulary.yml /tmp/vocabulary.yml
+          git show "$BASE_SHA:vocabulary.yml" > /tmp/base_vocabulary.yml
+          git show "$HEAD_SHA:vocabulary.yml" > /tmp/vocabulary.yml
       - name: Diff base branch `vocabulary.yml` vs. PR branch `vocabulary.yml`
         id: diff
         uses: josephburnett/jd@e37eef06c8638ac7a223d21fe3ff14082c5c0700 # v2.5.0
