@@ -11,7 +11,7 @@ on:
 
 jobs:
   ## run the following on PRs
-  osv-scan-pr:
+  yaml-diff:
     runs-on: ubuntu-latest
     strategy:
       matrix:
