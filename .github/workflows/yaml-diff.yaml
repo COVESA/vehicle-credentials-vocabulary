@@ -25,16 +25,26 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        # Saved in the workspace, as the jd Docker action cannot see /tmp.
         run: |
-          git show "$BASE_SHA:vocabulary.yml" > /tmp/base_vocabulary.yml
-          git show "$HEAD_SHA:vocabulary.yml" > /tmp/vocabulary.yml
+          git show "$BASE_SHA:vocabulary.yml" > base_vocabulary.yml
+          git show "$HEAD_SHA:vocabulary.yml" > head_vocabulary.yml
       - name: Diff base branch `vocabulary.yml` vs. PR branch `vocabulary.yml`
         id: diff
         uses: josephburnett/jd@e37eef06c8638ac7a223d21fe3ff14082c5c0700 # v2.5.0
         with:
-          args: /tmp/base_vocabulary.yml /tmp/vocabulary.yml
+          args: -yaml base_vocabulary.yml head_vocabulary.yml
+      # jd exits 0 if equal, 1 if different, and 2 on error. The action itself
+      # always succeeds, so check for errors here.
+      - name: Check for jd errors
+        if: steps.diff.outputs.exit_code != '0' && steps.diff.outputs.exit_code != '1'
+        env:
+          OUTPUT: ${{ steps.diff.outputs.output }}
+        run: |
+          echo "$OUTPUT"
+          exit 1
       - name: Comment PR with diff
-        if: steps.diff.outputs.output != ''
+        if: steps.diff.outputs.exit_code == '1'
         uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
         with:
           message: |
