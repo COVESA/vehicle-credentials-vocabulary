@@ -237,11 +237,10 @@ property:
     domain:
       - vvc:VehicleTitle
     comment: >-
-      A collection of official titles or designations related to the vehicle's
-      title status. This property may encompass various identifiers that
-      indicate the vehicle's legal status, such as 'clear', 'salvage', or other
-      relevant classifications that impact ownership, insurance, or
-      transferability.
+      One or more descriptive title brand labels, consistent with AAMVA
+      terminology, such as 'Clear', 'Salvage', or 'Original Taxi'. These labels
+      describe the vehicle's status, condition, or history and may affect
+      ownership, insurance, or transferability.
     context: https://w3id.org/vvc
   - id: equipmentTrustNumber
     label: Equipment Trust Number
