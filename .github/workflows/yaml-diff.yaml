@@ -1,8 +1,10 @@
+# Diffs vocabulary.yml on PRs. This runs with a read-only token, as PRs from
+# forks get one anyway. The diff is saved as an artifact and posted as a PR
+# comment by the yaml-diff-comment.yaml workflow.
 name: YAML Diff on PR
 
 permissions:
   contents: read
-  pull-requests: write
 
 on:
   pull_request:
@@ -43,13 +45,24 @@ jobs:
         run: |
           echo "$OUTPUT"
           exit 1
-      - name: Comment PR with diff
-        if: steps.diff.outputs.exit_code == '1'
-        uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
+      # An empty diff file means there are no differences.
+      - name: Save diff for comment workflow
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          EXIT_CODE: ${{ steps.diff.outputs.exit_code }}
+          OUTPUT: ${{ steps.diff.outputs.output }}
+        run: |
+          mkdir yaml-diff
+          echo "$PR_NUMBER" > yaml-diff/pr-number
+          if [ "$EXIT_CODE" = 1 ]; then
+            printf '%s\n' "$OUTPUT" > yaml-diff/diff
+          else
+            : > yaml-diff/diff
+          fi
+      - name: Upload diff
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          message: |
-            ## Diff between base and head `vocabulary.yml`
-
-            ```diff
-            ${{ steps.diff.outputs.output }}
-            ```
+          name: yaml-diff
+          path: yaml-diff/
+          if-no-files-found: error
+          retention-days: 5
