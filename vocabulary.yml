@@ -232,16 +232,15 @@ property:
       (DCPD; required AB, NB, NL, NS, ON, PE, QC), "civilLiability" (EU/CA
       general BI+PD term).
     context: https://w3id.org/vvc
-  - id: designations
-    label: Designations
+  - id: branding
+    label: Branding
     domain:
       - vvc:VehicleTitle
     comment: >-
-      A collection of official titles or designations related to the vehicle's
-      title status. This property may encompass various identifiers that
-      indicate the vehicle's legal status, such as 'clear', 'salvage', or other
-      relevant classifications that impact ownership, insurance, or
-      transferability.
+      One or more descriptive title brand labels, consistent with AAMVA
+      terminology, such as 'Clear', 'Salvage', or 'Original Taxi'. These labels
+      describe the vehicle's status, condition, or history and may affect
+      ownership, insurance, or transferability.
     context: https://w3id.org/vvc
   - id: equipmentTrustNumber
     label: Equipment Trust Number
@@ -373,6 +372,31 @@ property:
       formally relinquishes their claim on a vehicle. This property is important
       for documenting the resolution of a lien and allowing for the clear
       transfer of ownership without encumbrances.
+    context: https://w3id.org/vvc
+  - id: make
+    label: Make
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
+    comment: >-
+      A name that a manufacturer applies to a group of vehicles or engines.
+    context: https://w3id.org/vvc
+  - id: makeCode
+    label: Make Code
+    domain:
+      - vvc:VehicleTitle
+      - vvc:VehicleRegistration
+      - vvc:VehicleInsuranceInformation
+    comment: >-
+      The code a registration authority holds for the vehicle's make, as
+      distinct from the make's trade name. In North America this is the
+      four-character NCIC make code published by the FBI and administered for
+      jurisdictions by AAMVA; it is the make value exchanged between vehicle
+      registries and law enforcement, and it is the make field of record on a
+      Canadian registration. A credential that carries only a trade name cannot
+      be matched against a registry record without a lookup that the issuer has
+      already performed.
     context: https://w3id.org/vvc
   - id: manufacturer
     label: Manufacturer
@@ -595,6 +619,24 @@ property:
       The Registration Start Date indicates when the vehicle's registration
       became effective. This property is important for tracking the registration
       timeline and ensuring compliance with regulatory requirements.
+    context: https://w3id.org/vvc
+  - id: titleNumber
+    label: Title Number
+    domain:
+      - vvc:VehicleTitle
+    comment: >-
+      The identifier used by the issuing jurisdiction to reference a vehicle's
+      title. Its format is determined by that jurisdiction and may be derived
+      from the title issue date.
+    context: https://w3id.org/vvc
+  - id: jurisdiction
+    label: Jurisdiction
+    domain:
+      - vvc:VehicleTitle
+    comment: >-
+      The jurisdiction that issued the vehicle's title. This property provides
+      the jurisdictional context for interpreting titleNumber and verifying the
+      title record.
     context: https://w3id.org/vvc
   - id: titleIssueDate
     label: Title Issue Date

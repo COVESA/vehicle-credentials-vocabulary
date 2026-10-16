@@ -255,13 +255,14 @@
     {
       "@context": [
         "https://www.w3.org/ns/credentials/v2",
-        "https://w3id.org/vvc/v1rc2"
+        "https://w3id.org/vvc/v1rc5"
       ],
       "type": [
         "VerifiableCredential",
         "VehicleTitleCredential"
       ],
       "issuer": "did:web:dmv.utopia.example",
+      "validFrom": "2024-02-01T00:00:00Z",
       "credentialStatus": {
         "id": "https://example.gov/utopiadmv/credentials/status/3#94567",
         "type": "BitstringStatusListEntry",
@@ -276,8 +277,13 @@
           "type": "Organization",
           "name": "Honda"
         },
+        "make": "Honda",
+        "makeCode": "HOND",
+        "model": "Accord",
         "bodyType": "4H",
         "numberOfAxles": 2,
+        "numberOfCylinders": 4,
+        "vehicleTypeCode": "15",
         "weight": {
           "type": "QuantitativeValue",
           "value": "3000",
@@ -285,6 +291,8 @@
         },
         "vehicleModelDate": "1990",
         "fuelType": "G",
+        "motivePower": "Gasoline",
+        "isInsured": true,
         "purchaseDate": "2020-02-01",
         "firstSold": {
           "type": "FirstSaleInformation",
@@ -335,7 +343,8 @@
           "currency": "USD",
           "value": "100"
         },
-        "validFrom": "2024-02-01",
+        "titleNumber": "20240201",
+        "jurisdiction": "CA",
         "titleIssueDate": "2024-02-01",
         "licensePlateIdentifier": "ABC1234",
         "equipmentTrustNumber": "12345678",
@@ -352,13 +361,13 @@
             }
           }
         ],
-        "lienholderReleaseDate": "2020-01-01",
+        "lienholderReleaseDate": "2020-01-01T00:00:00Z",
         "controlNumber": "12345678",
         "description": "OFF HIGHWAY",
-        "designations": "Original Taxi"
+        "branding": "Original Taxi"
       },
       "proof": {
-        "type": "DataIntegrity",
+        "type": "DataIntegrityProof",
         "cryptosuite": "ecdsa-rdfc-2019",
         "verificationMethod": "did:web:dmv.utopia.example#key-1",
         "proofPurpose": "assertionMethod",
@@ -376,13 +385,15 @@
     {
       "@context": [
         "https://www.w3.org/ns/credentials/v2",
-        "https://w3id.org/vvc/v1rc2"
+        "https://w3id.org/vvc/v1rc5"
       ],
       "type": [
         "VerifiableCredential",
         "VehicleRegistrationCredential"
       ],
       "issuer": "did:web:dmv.utopia.example",
+      "validFrom": "2024-02-01T00:00:00Z",
+      "validUntil": "2025-02-01T00:00:00Z",
       "credentialStatus": {
         "id": "https://example.gov/utopiadmv/credentials/status/3#94567",
         "type": "BitstringStatusListEntry",
@@ -397,13 +408,22 @@
           "type": "Organization",
           "name": "Honda"
         },
+        "make": "Honda",
+        "makeCode": "HOND",
+        "model": "Accord",
+        "bodyType": "4H",
+        "numberOfAxles": 2,
+        "numberOfCylinders": 4,
         "weight": {
           "type": "QuantitativeValue",
           "value": "3000",
           "unitCode": "LBR"
         },
-        "vehicleModelDate": "1990",
+        "vehicleModelDate": "1990-01-01",
         "fuelType": "G",
+        "motivePower": "Gasoline",
+        "isInsured": true,
+        "purchaseDate": "2020-02-01",
         "owner": [
           {
             "type": "Person",
@@ -422,9 +442,18 @@
             }
           }
         ],
-        "registrationIssueDate": "2024-01-31",
-        "registrationStartDate": "2024-02-01",
-        "registrationExpirationDate": "2025-02-01",
+        "registeringOrganization": {
+          "type": "Organization",
+          "name": "UTOPIA DMV"
+        },
+        "feesPaid": {
+          "type": "MonetaryAmount",
+          "currency": "USD",
+          "value": "100"
+        },
+        "registrationIssueDate": "2024-01-31T00:00:00Z",
+        "registrationStartDate": "2024-02-01T00:00:00Z",
+        "registrationExpirationDate": "2025-02-01T00:00:00Z",
         "licensePlateIdentifier": "ABC1234",
         "licenseTypeCode": "11",
         "vlfClass": "FT",
@@ -432,7 +461,7 @@
         "vehicleTypeCode": "15"
       },
       "proof": {
-        "type": "DataIntegrity",
+        "type": "DataIntegrityProof",
         "cryptosuite": "ecdsa-rdfc-2019",
         "verificationMethod": "did:web:dmv.utopia.example#key-1",
         "proofPurpose": "assertionMethod",
@@ -450,13 +479,15 @@
     {
       "@context": [
         "https://www.w3.org/ns/credentials/v2",
-        "https://w3id.org/vvc/v1rc2"
+        "https://w3id.org/vvc/v1rc5"
       ],
       "type": [
         "VerifiableCredential",
         "VehicleInsuranceCredential"
       ],
       "issuer": "did:web:dmv.utopia.example",
+      "validFrom": "2025-01-01T00:00:00Z",
+      "validUntil": "2026-01-01T00:00:00Z",
       "credentialStatus": {
         "id": "https://example.gov/utopiadmv/credentials/status/3#94567",
         "type": "BitstringStatusListEntry",
@@ -471,6 +502,9 @@
           "type": "Organization",
           "name": "Honda"
         },
+        "make": "Honda",
+        "makeCode": "HOND",
+        "model": "Accord",
         "owner": [
           {
             "type": "Person",
@@ -485,17 +519,51 @@
           }
         ],
         "policyNumber": "CI12345000",
-        "policyStartDate": "2025-01-01",
-        "policyEndDate": "2026-01-01",
+        "policyHolder": "USEDCAR COLLECTOR",
+        "namedInsured": {
+          "type": "Person",
+          "name": "USEDCAR COLLECTOR"
+        },
+        "insuredAddress": {
+          "type": "PostalAddress",
+          "streetAddress": "123 LEMON AVE",
+          "addressLocality": "UTOPOLIS",
+          "addressRegion": "UTOPIA",
+          "postalCode": "12345"
+        },
+        "insuranceProvider": {
+          "type": "Organization",
+          "name": "UTOPIA AUTO INSURANCE"
+        },
+        "insurerCode": "UT-001",
+        "naicNumber": "12345",
+        "jurisdictionValidity": "US-CA",
+        "minimumLegalCoverageConfirmed": true,
+        "policyStartDate": "2025-01-01T00:00:00Z",
+        "policyEndDate": "2026-01-01T00:00:00Z",
         "coverageAmount": {
           "type": "MonetaryAmount",
           "currency": "USD",
           "value": "1000000"
         },
+        "coverageLimit": {
+          "type": "CoverageLimit",
+          "coverageType": "bodilyInjury",
+          "coverageLimitPerPerson": {
+            "type": "MonetaryAmount",
+            "currency": "USD",
+            "value": "100000"
+          },
+          "coverageLimitPerAccident": {
+            "type": "MonetaryAmount",
+            "currency": "USD",
+            "value": "300000"
+          }
+        },
         "licensePlateIdentifier": "ABC1234"
       },
       "proof": {
-        "type": "DataIntegrity",
+        "type": "DataIntegrityProof",
         "cryptosuite": "ecdsa-rdfc-2019",
         "verificationMethod": "did:web:dmv.utopia.example#key-1",
         "proofPurpose": "assertionMethod",
