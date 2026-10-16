@@ -10,6 +10,7 @@ on:
   pull_request:
     paths:
       - 'vocabulary.yml'
+      - '.github/workflows/yaml-diff.yaml'
 
 jobs:
   ## run the following on PRs
