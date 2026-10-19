@@ -2,6 +2,11 @@
 
 Field changes in each published JSON-LD context, compared with the previous release:
 
+## [v1](https://w3id.org/vvc/v1) - 2026-10-dd
+
+### Changed
+- Update context URLs in VC examples.
+
 ## [v1rc5](https://w3id.org/vvc/v1rc5) - 2026-10-19
 
 ### Added
